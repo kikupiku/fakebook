@@ -1,0 +1,35 @@
+extends layout
+
+block content 
+  h1 Sign Up
+  form(id='getAccessForm' method='POST' action='/users' enctype='multipart/form-data')
+    label(for='firstName') First Name:
+    input#firstName(type='text', placeholder='Alex', name='firstName', required='true')
+    br
+    label(for='lastName') Last Name:
+    input#lastName(type='text', placeholder='Smith', name='lastName', required='true')
+    br
+    label(for='email') Email:
+    input#email(type='text', placeholder='address@example.com', name='email', required='true')
+    br
+    label(for='email') Password:
+    input#password(type='password', name='password', required='true')
+    br
+    label(htmlFor='pictureInput') Profile Image:
+    input(type='file' id='pictureInput' class='pictureInput' name='image')
+    br
+    button(type='submit') Sign Up
+  //- 
+  //- h2 OR
+  //- 
+  //- h1 Log In:
+  //- form(id='getAccessForm' action='/log-in' method='POST')
+  //-   label.log-in-email(for='email') E-mail:
+  //-   input(name='email' placeholder='example@mail.com' type='text')
+  //-   br
+  //-   label.log-in-password(for='password') Password:
+  //-   input(name='password' type='password')
+  //-   br
+  //-   button(type='submit') Log In
+  //- br
+  //- <a href="/auth/facebook">Login with Facebook instead</a>
