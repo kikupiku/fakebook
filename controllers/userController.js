@@ -9,7 +9,12 @@ const bcrypt = require('bcryptjs');
 
 exports.timeline = function (req, res, next) {
   if (req.user) {
-    res.render('timeline', { title: 'Fakebook', currentUser: req.user });
+    console.log(req.url);
+    if (req.url.match(/#_=_/)) {
+      res.redirect(`/users/${req.user._id}`);
+    } else {
+      res.render('timeline', { title: 'Fakebook', currentUser: req.user });
+    }
   } else {
     res.render('signup-login', { title: 'Fakebook' });
   }

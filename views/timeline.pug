@@ -2,6 +2,7 @@ extends layout
 
 block content
   h1= title
-  p Hello
+  p TIMELINE
 
-    p hello #{currentUser.firstName}
+  p hello #{currentUser.firstName}
+  img(src=currentUser.picture)

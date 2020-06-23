@@ -18,18 +18,18 @@ block content
     label(htmlFor='pictureInput') Profile Image:
     input(type='file' id='pictureInput' class='pictureInput' name='image')
     br
-    button(type='submit') Sign Up
-  //- 
-  //- h2 OR
-  //- 
-  //- h1 Log In:
-  //- form(id='getAccessForm' action='/log-in' method='POST')
-  //-   label.log-in-email(for='email') E-mail:
-  //-   input(name='email' placeholder='example@mail.com' type='text')
-  //-   br
-  //-   label.log-in-password(for='password') Password:
-  //-   input(name='password' type='password')
-  //-   br
-  //-   button(type='submit') Log In
-  //- br
-  //- <a href="/auth/facebook">Login with Facebook instead</a>
+    button(type='submit' action='/users') Sign Up
+  
+  h2 OR
+  
+  h1 Log In:
+  form(id='getAccessForm' action='/log-in' method='POST')
+    label.log-in-email(for='email') E-mail:
+    input(name='email' placeholder='example@mail.com' type='text')
+    br
+    label.log-in-password(for='password') Password:
+    input(name='password' type='password')
+    br
+    button(type='submit' action='/log-in') Log In
+  br
+  <a href="/auth/facebook">Login with Facebook instead</a>
