@@ -2,7 +2,22 @@ extends layout
 
 block content
   h1= title
-  p TIMELINE
-
-  p hello #{currentUser.firstName}
-  img(src=currentUser.picture)
+  
+  form.add-post(method='POST' action='/posts' enctype='multipart/form-data')
+    label(for='postContent') Write a Post:
+    br
+    textarea#postContent(type='text', name='postContent', required='true')
+    br
+    label(htmlFor='pictureInput') Add an Image:
+    input(type='file' id='pictureInput' class='pictureInput' name='image')
+    br
+    button(type='submit' action='/posts') Add Post
+    
+  br
+  div.post-list
+    for post in postsOfFriends
+      p= post.postContent
+      if (post.postPicture !== '')
+        img(src=post.postPicture)
+      p= post.createdAt
+    

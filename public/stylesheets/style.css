@@ -137,11 +137,16 @@ li {
 }
 
 .dropdown-menu {
-  display: none;
+	background: #ddd;
+	display: none;
+  height: 0;
+  left: 0;
+  transform-origin: top center;
 }
 
 .userPicture:hover .dropdown-menu {
-  display: block;
+	height: 70px;
+	display: block;
 }
 
 /* ===========================================================

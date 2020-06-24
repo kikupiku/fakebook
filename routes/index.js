@@ -24,8 +24,8 @@ router.get('/users/:id/friend-list', userController.friend_list_get);
 
 // POST ROUTES
 
-router.post('/posts', postController.post_create_post);
-router.put('/posts/:id', postController.post_update_put);
+router.post('/posts', parser.single('image'), postController.post_create_post);
+router.put('/posts/:id', parser.single('image'), postController.post_update_put);
 router.delete('/posts/:id', postController.post_delete);
 
 // COMMENT ROUTES

@@ -9,7 +9,14 @@ const bcrypt = require('bcryptjs');
 
 exports.timeline = function (req, res, next) {
   if (req.user) {
-    res.render('timeline', { title: 'Fakebook', currentUser: req.user });
+    Post.find({ 'author': { '$in': req.user.friends }, 'author': req.user._id })
+    .sort('-createdAt')
+    .exec(function (err, postsOfFriends) {
+      if (err) {
+        return next(err);
+      }
+      res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends });
+    });
   } else {
     res.render('signup-login', { title: 'Fakebook' });
   }
