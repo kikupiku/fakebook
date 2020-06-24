@@ -16,14 +16,7 @@ exports.timeline = function (req, res, next) {
 };
 
 exports.find_friends_get = function (req, res, next) {
-  User.find({ '_id': { '$ne': req.user._id }})
-  .exec(function (err, users) {
-    if (err) {
-      return next(err);
-    }
 
-    res.render('findFriends', { title: 'Find Friends', users: users, currentUser: req.user });
-  });
 };
 
 exports.user_create_post = [
@@ -111,5 +104,14 @@ exports.friend_requests_get = function (req, res, next) {
 };
 
 exports.friend_list_get = function (req, res, next) {
+  console.log('friendssssssssssss: ', req.user.friends);
+  User.find({ '_id': { '$in': req.user.friends }})
+  .exec(function (err, friends) {
+    if (err) {
+      return next(err);
+    }
 
+    console.log(friends);
+    res.render('myFriends', { title: 'My Friends', friends: friends, currentUser: req.user });
+  });
 };

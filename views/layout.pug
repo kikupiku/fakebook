@@ -3,5 +3,25 @@ html
   head
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
+    link(href='https://fonts.googleapis.com/css2?family=Gloria+Hallelujah&display=swap' rel='stylesheet')
   body
+    if (currentUser)
+      header
+        ul.menu
+          li 
+            a(href='/') Timeline
+          li 
+            a(href='/users') Find Friends
+          li 
+            a(href='/users' + currentUser._id + '/friend-requests') Friends Requests
+          li 
+            a(href='/users/' + currentUser._id + '/friend-list') My Friends
+        div.userPicture
+          img.profilePicInMenu(src=currentUser.picture)
+          ul.dropdown-menu
+            li 
+              a(href='/users/' + currentUser._id) My Profile
+            li.logout
+              a(href='/log-out') Log out
+                
     block content

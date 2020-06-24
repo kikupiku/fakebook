@@ -1,8 +1,177 @@
+/* http://meyerweb.com/eric/tools/css/reset/
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	line-height: 1;
+  box-sizing: border-box;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+/* ================================================================
+MAIN
+================================================================= */
+
+h1 {
+	color: rgb(61,134,46);
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 36px;
+	text-align: center;
+	margin-top: 15px;
+	margin-bottom: 15px;
 }
 
 a {
-  color: #00B7FF;
+  text-decoration: none;
+}
+
+header {
+  width: 100%;
+  position: sticky;
+  top: 0;
+  height: 60px;
+  background-color: rgb(61,134,46);
+  color: white;
+  font-family: 'Gloria Hallelujah', cursive;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+ul.menu {
+  width: 40%;
+  height: 100%;
+  display: flex;
+  justify-content: flex-start;
+}
+
+li {
+  vertical-align: middle;
+}
+
+.menu li {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.menu li a {
+  color: rgba(255,255,255,.75);
+  line-height: 2.5;
+}
+
+.menu li a:hover {
+  color: white;
+}
+
+.userPicture {
+  position: absolute;
+  top: 5px;
+  right: 0;
+  width: 150px;
+  text-align: center;
+}
+
+.profilePicInMenu {
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
+}
+
+.dropdown-menu li {
+  background-color: rgb(61,134,46);
+  display: block;
+  padding: 7px;
+  height: 35px;
+}
+
+.menu li:hover,
+.dropdown-menu li:hover {
+  background-color: rgb(46,97,47);
+}
+
+.logout:hover {
+  background-color: rgb(184,93,60) !important;
+}
+
+.dropdown-menu li a {
+  color: rgba(255,255,255,.75);
+}
+
+.dropdown-menu li a:hover {
+  color: white;
+}
+
+.dropdown-menu {
+  display: none;
+}
+
+.userPicture:hover .dropdown-menu {
+  display: block;
+}
+
+/* ===========================================================
+FIND USERS
+============================================================ */
+
+.myFriends {
+	display: flex;
+	height: auto;
+	width: 100%;
+}
+
+.friendContainer {
+	height: 24vh;
+	width: 11vw;
+	margin-left: 15px;
+	margin-bottom: 15px;
+}
+
+.friendContainer p {
+	color: rgb(68,106,53);
+	text-align: center;
+	width: 100%;
+	display: block;
+	text-transform: uppercase;
+}
+
+.friendContainer img {
+	height: 10vw;
+	width: 10vw;
+	border-radius: 50%;
+	padding: 5px;
 }

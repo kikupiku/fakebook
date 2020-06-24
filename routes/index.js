@@ -9,7 +9,7 @@ let commentController = require('../controllers/commentController');
 const parser = require('../cloudinary-config');
 
 /* GET home page. */
-router.get('/', userController.timeline); // main-page when not logged-in
+router.get('/', userController.timeline); // signup/login page when not logged-in
 
 // USER ROUTES
 

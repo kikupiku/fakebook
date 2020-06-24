@@ -1,0 +1,13 @@
+extends layout
+
+block content 
+
+  h1= title
+  
+  div.myFriends
+    for friend in friends
+      div.friendContainer
+        p= friend.fullName
+        img(src=friend.picture)
+
+        

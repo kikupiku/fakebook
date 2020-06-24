@@ -1,16 +1,17 @@
 extends layout
 
 block content 
+
   h1= title
-  h2 #{currentUser.firstName} #{currentUser.lastName}
   
-  for user in users
-    div.userContainer
-      p= user.fullName
-      img(src=user.picture)
-      for friend in currentUser.friends
-        if (friend !== user._id.toString())
-          a(href='#') Send friend request
-        else if (friend == user._id)
-          p this is a friend
+  div.potentialFriends
+    for friend in friends
+      div.friendContainer
+        p= friend.fullName
+        img(src=friend.picture)
+        for friend in currentUser.friends
+          if (friend !== friend._id.toString())
+            a(href='#') Send friend request
+          else if (friend == friend._id)
+            p this is a friend
         
