@@ -9,19 +9,21 @@ const bcrypt = require('bcryptjs');
 
 exports.timeline = function (req, res, next) {
   if (req.user) {
-    console.log(req.url);
-    if (req.url.match(/#_=_/)) {
-      res.redirect(`/users/${req.user._id}`);
-    } else {
-      res.render('timeline', { title: 'Fakebook', currentUser: req.user });
-    }
+    res.render('timeline', { title: 'Fakebook', currentUser: req.user });
   } else {
     res.render('signup-login', { title: 'Fakebook' });
   }
 };
 
 exports.find_friends_get = function (req, res, next) {
+  User.find({ '_id': { '$ne': req.user._id }})
+  .exec(function (err, users) {
+    if (err) {
+      return next(err);
+    }
 
+    res.render('findFriends', { title: 'Find Friends', users: users, currentUser: req.user });
+  });
 };
 
 exports.user_create_post = [
@@ -61,6 +63,8 @@ exports.user_create_post = [
         lastName: req.body.lastName,
         email: req.body.email,
         password: hashedPassword,
+        friends: [],
+        friendRequests: [],
         picture: (!req.file) ? 'https://res.cloudinary.com/kikupiku/image/upload/v1592919291/fakebook/default-user_s7rozl.png' : req.file.path,
       });
 
@@ -74,7 +78,7 @@ exports.user_create_post = [
 
           req.login(user, function(err) {
             if (err) { return next(err); }
-            return res.render('profile', { title: 'User Profile', currentUser: req.user });
+            return res.render('timeline', { title: 'Timeline' });
           });
 
         });
