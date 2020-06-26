@@ -12,15 +12,13 @@ exports.post_create_post = [
 
   (req, res, next) => {
     const errors = validationResult(req);
-    console.log('paaaaaaaaaaaath: ', req.file.path);
 
     let post = new Post({
       author: req.user,
       createdAt: new Date(),
       postContent: req.body.postContent,
-      likes: 0,
-      fans: [],
-      postPicture: req.file.path,
+      likes: [],
+      postPicture: (req.file) ? req.file.path: '',
     });
 
     if (!errors.isEmpty()) {
@@ -38,7 +36,27 @@ exports.post_create_post = [
 ];
 
 exports.post_update_put = [   //e.g., when likes are clicked
+  (req, res, next) => {
+    Post.findById(req.body.postId)
+    .exec(function (err, postToUpdate) {
+      let post = new Post({
+        author: postToUpdate.author,
+        createdAt: postToUpdate.createdAt,
+        postContent: postToUpdate.createdAt,
+        likes: postToUpdate.likes.push(req.body.postFan),
+        postPicture: postToUpdate.postPicture,
+        _id: postToUpdate._id,
+      });
 
+      Post.findByIdAndUpdate(postToUpdate._id, post, {}, function (err, updatedPost) {
+        if (err) {
+          return next(err);
+        }
+
+        res.render('timeline', {title: 'added like' });
+      });
+    });
+  },
 ];
 
 exports.post_delete = function (req, res, next) {

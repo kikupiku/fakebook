@@ -1,8 +1,9 @@
 extends layout
 
 block content 
+  
   h1 Sign Up
-  form(id='getAccessForm' method='POST' action='/users' enctype='multipart/form-data')
+  form(id='getAccessFormFB' method='POST' action='/users' enctype='multipart/form-data')
     label(for='firstName') First Name:
     input#firstName(type='text', placeholder='Alex', name='firstName', required='true')
     br
@@ -19,6 +20,9 @@ block content
     input(type='file' id='pictureInput' class='pictureInput' name='image')
     br
     button(type='submit' action='/users') Sign Up
+    
+  br
+  <a href="/auth/facebook">Sign up with Facebook instead</a>
   
   h2 OR
   
@@ -33,3 +37,7 @@ block content
     button(type='submit' action='/log-in') Log In
   br
   <a href="/auth/facebook">Login with Facebook instead</a>
+
+  if (errors) 
+    for error in errors
+      p= error

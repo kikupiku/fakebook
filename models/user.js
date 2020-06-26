@@ -7,8 +7,8 @@ let UserSchema = new Schema({
   email: { type: String },
   fbId: { type: String },
   password: { type: String, min: 5 },
-  friends: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-  friendRequests: [{ type: Schema.Types.ObjectId, ref: 'User' }],
+  friends: [{ type: String }],
+  friendRequests: [{ type: String }],
   picture: { type: String, required: false, default: 'https://res.cloudinary.com/kikupiku/image/upload/v1592919291/fakebook/default-user_s7rozl.png' },
 });
 

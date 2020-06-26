@@ -104,12 +104,18 @@ li {
   right: 0;
   width: 150px;
   text-align: center;
+	z-index: 9999;
 }
 
 .profilePicInMenu {
   border-radius: 50%;
   height: 50px;
   width: 50px;
+}
+
+.currentUserInMenu {
+	color: rgba(255,255,255,.75);
+	font-size: 16px;
 }
 
 .dropdown-menu li {
@@ -122,6 +128,10 @@ li {
 .menu li:hover,
 .dropdown-menu li:hover {
   background-color: rgb(46,97,47);
+}
+
+li.currentUserInMenu:hover {
+	background-color: rgb(61,134,46);
 }
 
 .logout:hover {
@@ -150,10 +160,11 @@ li {
 }
 
 /* ===========================================================
-FIND USERS
+FIND FRIENDS
 ============================================================ */
 
-.myFriends {
+.myFriends,
+.potentialFriends {
 	display: flex;
 	height: auto;
 	width: 100%;
@@ -179,4 +190,15 @@ FIND USERS
 	width: 10vw;
 	border-radius: 50%;
 	padding: 5px;
+}
+
+.post-container {
+	margin-bottom: 20px;
+}
+
+.smallProfilePic {
+	height: 25px;
+	width: 25px;
+	border-radius: 50%;
+	object-fit: cover;
 }

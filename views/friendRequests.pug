@@ -1,0 +1,17 @@
+extends layout
+
+block content
+  
+  h1= title
+  
+  div.potentialFriends
+
+    for potentialFriend, index in potentialFriends
+      div.friendContainer
+        p #{potentialFriend.fullName}
+        img(src=potentialFriend.picture)
+        p Respond to request
+        form(id='requestResponse' + index method='POST')
+          input(type='hidden' value=potentialFriend name='potentialFriend')
+          button(type='submit' formaction='/request-accept' method='POST') Accept
+          button(type='submit' formaction='/request-decline' method='POST') Decline

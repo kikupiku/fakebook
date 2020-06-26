@@ -5,13 +5,16 @@ block content
   h1= title
   
   div.potentialFriends
-    for friend in friends
+
+    for potentialFriend, index in potentialFriends
       div.friendContainer
-        p= friend.fullName
-        img(src=friend.picture)
-        for friend in currentUser.friends
-          if (friend !== friend._id.toString())
-            a(href='#') Send friend request
-          else if (friend == friend._id)
-            p this is a friend
-        
+        p #{potentialFriend.fullName}
+        img(src=potentialFriend.picture)
+        if (currentUser.friendRequests.find(request => request == potentialFriend._id))
+          p Respond to request
+        else if (potentialFriend.friendRequests.find(request => request == currentUser._id))
+          p Request pending
+        else
+          form(id='requestFriendship' + index action='/request-friendship' method='POST')
+            input(type='hidden' value=potentialFriend name='potentialFriend')
+            button(type='submit' action='/requestFriendship') Add Friend

@@ -13,12 +13,14 @@ html
           li 
             a(href='/users') Find Friends
           li 
-            a(href='/users' + currentUser._id + '/friend-requests') Friends Requests
+            a(href='/users/' + currentUser._id + '/friend-requests') Friend Requests
           li 
             a(href='/users/' + currentUser._id + '/friend-list') My Friends
         div.userPicture
           img.profilePicInMenu(src=currentUser.picture)
           ul.dropdown-menu
+            li.currentUserInMenu
+              p #{currentUser.firstName} #{currentUser.lastName}
             li 
               a(href='/users/' + currentUser._id) My Profile
             li.logout

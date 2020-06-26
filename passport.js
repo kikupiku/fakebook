@@ -6,12 +6,19 @@ const User = require('./models/user');
 
 let bcrypt = require('bcryptjs');
 
+passport.serializeUser(function (user, done) {
+  done(null, user);
+});
+
+passport.deserializeUser(function (user, done) {
+  done(null, user);
+});
+
 passport.use(new LocalStrategy({
     usernameField: 'email',
     passwordField: 'password',
   },
   function (username, password, done) {
-    console.log('got inside passport');
     User.findOne({ email: username }, (err, user) => {
       if (err) {
         return done(err);
@@ -22,6 +29,7 @@ passport.use(new LocalStrategy({
       }
 
       bcrypt.compare(password, user.password, (err, res) => {
+        console.log('compared data: ', err, res);
         if (res) {
           return done(null, user);
         } else {
@@ -32,13 +40,6 @@ passport.use(new LocalStrategy({
   }
 ));
 
-passport.serializeUser(function (user, done) {
-  done(null, user);
-});
-
-passport.deserializeUser(function (user, done) {
-  done(null, user);
-});
 
 passport.use(new FacebookStrategy({
     clientID: process.env.FACEBOOK_APP_ID,

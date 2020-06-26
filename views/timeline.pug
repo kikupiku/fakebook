@@ -15,9 +15,29 @@ block content
     
   br
   div.post-list
-    for post in postsOfFriends
-      p= post.postContent
-      if (post.postPicture !== '')
-        img(src=post.postPicture)
-      p= post.createdAt
+    for post, index in postsOfFriends
+      div.post-container
+        p= post.postContent
+        img.smallProfilePic(src=post.author.picture)
+        |  #{post.author.fullName}
+        if (post.postPicture !== '')
+          img(src=post.postPicture)
+        p= post.createdAgo
+        form.add-like(method='PUT' action='/posts/' + post._id)
+          input(type='hidden' id='postId' + index name='postId' value=post._id)
+          input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
+          button.like-btn(type='submit' action='/posts/' + post._id) Like
+          span  #{post.likes.length}
+          if (post.likes.length == 1)
+            span  like
+          else
+            span  likes
+        br
+        form.add-comment(method='POST' action='/comments')
+          label(for='commentContent') Write a Comment:
+          br
+          textarea#commentContent(type='text', name='commentContent', required='true')
+          input(type='hidden' name='commentedPostId' value=post._id)
+          br
+          button(type='submit' action='/comments') Add Comment
     

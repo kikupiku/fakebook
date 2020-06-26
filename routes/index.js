@@ -15,12 +15,17 @@ router.get('/', userController.timeline); // signup/login page when not logged-i
 
 router.get('/users', userController.find_friends_get); //all users list
 router.post('/users', parser.single('image'), userController.user_create_post);
+router.post('/log-in', userController.user_login);
+router.get('/log-out', userController.user_logout_get);
 router.delete('/users/:id', userController.user_delete);
 router.get('/users/:id/update', userController.user_update_get);
 router.put('/users/:id', userController.user_update_put);
 router.get('/users/:id', userController.user_profile_get); //user info and all of this user's posts
 router.get('/users/:id/friend-requests', userController.friend_requests_get);
 router.get('/users/:id/friend-list', userController.friend_list_get);
+router.post('/request-friendship', userController.request_friendship_post);
+router.post('/request-accept', userController.request_accept_post);
+router.post('/request-decline', userController.request_decline_post);
 
 // POST ROUTES
 
@@ -39,7 +44,7 @@ router.delete('/comments/:id', commentController.comment_delete);
 router.get('/auth/facebook', passport.authenticate('facebook'));
 router.get('/auth/facebook/callback', passport.authenticate('facebook', {
   successRedirect: '/',
-  failureRedirect: '/login',
+  failureRedirect: '/',
 }));
 
 module.exports = router;
