@@ -8,7 +8,6 @@ let PostSchema = new Schema({
   createdAt: { type: Date, required: true },
   postContent: { type: String, required: true },
   likes: [{ type: String }],
-  fans: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   postPicture: { type: String, required: false },
 });
 

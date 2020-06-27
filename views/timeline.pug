@@ -3,7 +3,7 @@ extends layout
 block content
   h1= title
   
-  form.add-post(method='POST' action='/posts' enctype='multipart/form-data')
+  form.add-post(id='createNewPost' method='POST' action='/posts' enctype='multipart/form-data')
     label(for='postContent') Write a Post:
     br
     textarea#postContent(type='text', name='postContent', required='true')
@@ -11,7 +11,7 @@ block content
     label(htmlFor='pictureInput') Add an Image:
     input(type='file' id='pictureInput' class='pictureInput' name='image')
     br
-    button(type='submit' action='/posts') Add Post
+    button(type='submit' formaction='/posts' method='POST') Add Post
     
   br
   div.post-list
@@ -23,21 +23,24 @@ block content
         if (post.postPicture !== '')
           img(src=post.postPicture)
         p= post.createdAgo
-        form.add-like(method='PUT' action='/posts/' + post._id)
+        form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
           input(type='hidden' id='postId' + index name='postId' value=post._id)
           input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
-          button.like-btn(type='submit' action='/posts/' + post._id) Like
+          if (post.likes.includes(currentUser._id))
+            button.like-btn(method='POST' type='submit' formaction='remove-like') Remove like
+          else
+            button.like-btn(method='POST' type='submit' formaction='/posts/' + post._id) Like
           span  #{post.likes.length}
           if (post.likes.length == 1)
             span  like
           else
             span  likes
         br
-        form.add-comment(method='POST' action='/comments')
+        form.add-comment(method='POST' action='/comments' id='add-comment' + post._id + index)
           label(for='commentContent') Write a Comment:
           br
           textarea#commentContent(type='text', name='commentContent', required='true')
           input(type='hidden' name='commentedPostId' value=post._id)
           br
-          button(type='submit' action='/comments') Add Comment
+          button(type='submit' formaction='/comments' method='POST') Add Comment
     

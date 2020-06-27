@@ -42,18 +42,20 @@ exports.post_update_put = [   //e.g., when likes are clicked
       let post = new Post({
         author: postToUpdate.author,
         createdAt: postToUpdate.createdAt,
-        postContent: postToUpdate.createdAt,
-        likes: postToUpdate.likes.push(req.body.postFan),
+        postContent: postToUpdate.postContent,
+        likes: postToUpdate.likes.concat([req.body.postFan]),
         postPicture: postToUpdate.postPicture,
         _id: postToUpdate._id,
       });
+
+      console.log('req.body.postFanId: ', req.body.postFan);
 
       Post.findByIdAndUpdate(postToUpdate._id, post, {}, function (err, updatedPost) {
         if (err) {
           return next(err);
         }
 
-        res.render('timeline', {title: 'added like' });
+        res.redirect('/');
       });
     });
   },
