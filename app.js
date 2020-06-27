@@ -8,6 +8,7 @@ let flash = require('connect-flash');
 dotenv.config();
 let passport = require('./passport');
 let session = require('express-session');
+let User = require('./models/user');
 
 let indexRouter = require('./routes/index');
 let usersRouter = require('./routes/users');
@@ -29,8 +30,16 @@ let db = mongoose.connection;
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 app.use(function (req, res, next) {
-  res.locals.currentUser = req.user;
-  next();
+  if (req.user) {
+    User.findById(req.user._id)
+    .exec(function (err, user) {
+      res.locals.currentUser = user;
+      req.user = user;
+      next();
+    });
+  } else {
+    next();
+  }
 });
 
 // view engine setup
