@@ -35,7 +35,7 @@ exports.post_create_post = [
   },
 ];
 
-exports.post_update_put = [   //e.g., when likes are clicked
+exports.add_like_post = [   //e.g., when likes are clicked
   (req, res, next) => {
     Post.findById(req.body.postId)
     .exec(function (err, postToUpdate) {
@@ -49,6 +49,33 @@ exports.post_update_put = [   //e.g., when likes are clicked
       });
 
       console.log('req.body.postFanId: ', req.body.postFan);
+
+      Post.findByIdAndUpdate(postToUpdate._id, post, {}, function (err, updatedPost) {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect('/');
+      });
+    });
+  },
+];
+
+exports.remove_like_post = [
+  (req, res, next) => {
+    Post.findById(req.body.postId)
+    .exec(function (err, postToUpdate) {
+
+      let likesReduced = postToUpdate.likes.filter((val => val != req.body.postFan));
+
+      let post = new Post({
+        author: postToUpdate.author,
+        createdAt: postToUpdate.createdAt,
+        postContent: postToUpdate.postContent,
+        likes: likesReduced,
+        postPicture: postToUpdate.postPicture,
+        _id: postToUpdate._id,
+      });
 
       Post.findByIdAndUpdate(postToUpdate._id, post, {}, function (err, updatedPost) {
         if (err) {

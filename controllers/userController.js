@@ -16,11 +16,25 @@ exports.timeline = function (req, res, next) {
       if (err) {
         return next(err);
       }
-      res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends });
+
+      let IdsOfPostsOfFriends = postsOfFriends.map(post => post._id);
+      Comment.find({ 'post': { '$in': IdsOfPostsOfFriends } })
+      .sort('createdAt')
+      .populate('commenter')
+      .exec(function (err, commentsToPostsOfFriends) {
+        if (err) {
+          return next(err);
+        }
+
+        console.log('IdsOfPostsOfFriends: ', IdsOfPostsOfFriends);
+        console.log('postsOfFriends: ', postsOfFriends);
+        console.log('commentsToPostsOfFriends: ', commentsToPostsOfFriends);
+
+        res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends });
+      });
     });
   } else {
     let errors = req.flash('error');
-    console.log('errors of login: ', errors);
     res.render('signup-login', { title: 'Fakebook', errors: errors });
   }
 };
@@ -171,9 +185,6 @@ exports.request_friendship_post = [
         return next(err);
       }
 
-      console.log('potentsch: ', potentialFriend.friendRequests);
-      console.log('currentUserId: ', req.user._id);
-
       let user = new User({
         firstName: potentialFriend.firstName,
         lastName: potentialFriend.lastName,
@@ -185,7 +196,6 @@ exports.request_friendship_post = [
         _id: potentialFriend._id,
       });
 
-      console.log('updatedUser: ', user.friendRequests);
       User.findByIdAndUpdate(potentialFriend._id, user, {}, function (err, updatedUser) {
         res.redirect('/users');
       });
@@ -201,11 +211,7 @@ exports.request_accept_post = [
         return next(err);
       }
 
-      console.log('making sure who is my new friend: ', newFriend);
-      console.log('req.user.friendRequests: ', req.user.friendRequests);
       let requestsReduced = req.user.friendRequests.filter((val => val != newFriend._id));
-      console.log('req.user.id: ', req.user._id, typeof req.user._id);
-      console.log('requestsReduced: ', requestsReduced);
 
       let friend = new User({
         firstName: newFriend.firstName,
@@ -218,8 +224,6 @@ exports.request_accept_post = [
         _id: newFriend._id,
       });
 
-      console.log('friend: ', friend);
-
       let user = new User({
         firstName: req.user.firstName,
         lastName: req.user.lastName,
@@ -230,8 +234,6 @@ exports.request_accept_post = [
         picture: req.user.picture,
         _id: req.user._id,
       });
-
-      console.log('user: ', user);
 
       User.findByIdAndUpdate(newFriend._id, friend, {}, function (err, updatedFriend) {
         User.findByIdAndUpdate(req.user._id, user, {}, function (err, updatedUser) {

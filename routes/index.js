@@ -30,7 +30,8 @@ router.post('/request-decline', userController.request_decline_post);
 // POST ROUTES
 
 router.post('/posts', parser.single('image'), postController.post_create_post);
-router.post('/posts/:id', parser.single('image'), postController.post_update_put);
+router.post('/posts/:id', parser.single('image'), postController.add_like_post);
+router.post('/remove-like', parser.single('imsge'), postController.remove_like_post);
 router.delete('/posts/:id', postController.post_delete);
 
 // COMMENT ROUTES
@@ -48,3 +49,17 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 }));
 
 module.exports = router;
+
+// TODO:
+// build profile with posts and comments,
+// refactor redirect to be conditional based on whether the referrer is profile or timeline (so that it goes back to where the user was)
+// edit comments,
+// delete comments,
+// edit posts,
+// delete posts,
+// edit user info,
+// delete user (big one!)
+// decline friendship request endpoint,
+// allow processing friend requests from find friends and friend
+// request pages alike, and refactor redirect in a similar way as with profile and timeline redirects
+// visualssssss

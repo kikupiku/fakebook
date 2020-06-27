@@ -22,7 +22,7 @@ block content
         |  #{post.author.fullName}
         if (post.postPicture !== '')
           img(src=post.postPicture)
-        p= post.createdAgo
+        p Posted #{post.createdAgo}
         form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
           input(type='hidden' id='postId' + index name='postId' value=post._id)
           input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
@@ -43,4 +43,11 @@ block content
           input(type='hidden' name='commentedPostId' value=post._id)
           br
           button(type='submit' formaction='/comments' method='POST') Add Comment
+        for comment in commentsToPostsOfFriends
+          if (comment.post._id.toString() == post._id)
+            div.commentContainer
+              p= comment.commentContent
+              img.smallerProfilePic(src=comment.commenter.picture)
+              |  #{comment.commenter.fullName}
+              p Commented #{comment.createdAgo}
     
