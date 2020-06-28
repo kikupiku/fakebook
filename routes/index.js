@@ -26,6 +26,7 @@ router.get('/users/:id/friend-list', userController.friend_list_get);
 router.post('/request-friendship', userController.request_friendship_post);
 router.post('/request-accept', userController.request_accept_post);
 router.post('/request-decline', userController.request_decline_post);
+router.post('/request-cancel', userController.request_cancel_post);
 
 // POST ROUTES
 
@@ -59,7 +60,7 @@ module.exports = router;
 // delete posts,
 // edit user info,
 // delete user (big one!)
-// decline friendship request endpoint,
+// allow unfriending from everywhere
 // allow processing friend requests from find friends and friend
 // request pages alike, and refactor redirect in a similar way as with profile and timeline redirects
 // visualssssss

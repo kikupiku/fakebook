@@ -26,10 +26,6 @@ exports.timeline = function (req, res, next) {
           return next(err);
         }
 
-        console.log('IdsOfPostsOfFriends: ', IdsOfPostsOfFriends);
-        console.log('postsOfFriends: ', postsOfFriends);
-        console.log('commentsToPostsOfFriends: ', commentsToPostsOfFriends);
-
         res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends });
       });
     });
@@ -246,6 +242,64 @@ exports.request_accept_post = [
 
 exports.request_decline_post = [
   (req, res, next) => {
+    async.parallel({
+      friendNotToBe: function (callback) {
+        User.findById(JSON.parse(req.body.potentialFriend)._id)
+        .exec(callback);
+      },
+      referrer: function (callback) {
+      let referrerURL = req.get('Referrer');
+      let referrer = referrerURL.substring(referrerURL.lastIndexOf('/') + 1);
+      callback(null, referrer);
+      },
+    }, function (err, results) {
+      if (err) {
+        return next(err);
+      }
 
+      let requestsReduced = req.user.friendRequests.filter(val => val != results.friendNotToBe._id);
+
+      User.update({ _id: req.user._id }, { friendRequests: requestsReduced }, function (err, updatedUser) {
+        if (err) {
+          return next(err);
+        }
+
+        if (results.referrer == 'users') {
+          res.redirect('/users');
+        } else {
+          res.redirect('/users/' + req.user._id + '/friend-requests');
+        }
+      });
+    });
+  },
+];
+
+exports.request_cancel_post = [
+  (req, res, next) => {
+    async.parallel({
+      friendNotToBe: function (callback) {
+        User.findById(JSON.parse(req.body.potentialFriend)._id)
+        .exec(callback);
+      },
+      referrer: function (callback) {
+      let referrerURL = req.get('Referrer');
+      let referrer = referrerURL.substring(referrerURL.lastIndexOf('/') + 1);
+      callback(null, referrer);
+      },
+    }, function (err, results) {
+      if (err) {
+        return next(err);
+      }
+
+      let requestsReduced = results.friendNotToBe.friendRequests.filter(val => val != req.user._id);
+
+      User.update({ _id: results.friendNotToBe._id }, { friendRequests: requestsReduced }, function (err, updatedUser) {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect(req.get('referer'));
+      });
+    });
   },
 ];

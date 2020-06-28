@@ -12,8 +12,15 @@ block content
         img(src=potentialFriend.picture)
         if (currentUser.friendRequests.find(request => request == potentialFriend._id))
           p Respond to request
+          form(id='requestResponse' + index method='POST')
+            input(type='hidden' value=potentialFriend name='potentialFriend')
+            button(type='submit' formaction='/request-accept' method='POST') Accept
+            button(type='submit' formaction='/request-decline' method='POST') Decline
         else if (potentialFriend.friendRequests.find(request => request == currentUser._id))
           p Request pending
+          form(id='cancelRequest' + index method='POST')
+            input(type='hidden' value=potentialFriend name='potentialFriend')
+            button(type='submit' formaction='/request-cancel' method='POST') Cancel Request
         else
           form(id='requestFriendship' + index action='/request-friendship' method='POST')
             input(type='hidden' value=potentialFriend name='potentialFriend')
