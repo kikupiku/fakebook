@@ -19,7 +19,7 @@ block content
       div.post-container
         p= post.postContent
         img.smallProfilePic(src=post.author.picture)
-        |  #{post.author.fullName}
+        a(href='/users/' + post.author._id) #{post.author.fullName}
         if (post.postPicture !== '')
           img(src=post.postPicture)
         p Posted #{post.createdAgo}
@@ -48,6 +48,6 @@ block content
             div.commentContainer
               p= comment.commentContent
               img.smallerProfilePic(src=comment.commenter.picture)
-              |  #{comment.commenter.fullName}
+              a(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
               p Commented #{comment.createdAgo}
     

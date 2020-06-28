@@ -146,7 +146,29 @@ exports.user_update_put = [
 ];
 
 exports.user_profile_get = function (req, res, next) {
+  async.parallel({
+    user: function (callback) {
+      User.findById(req.params.id)
+      .exec(callback);
+    },
+    postsOfUser: function (callback) {
+      Post.find({ '_id': req.params.id })
+      .sort('-createdAt')
+      .exec(callback);
+    },
+    commentsToPostsOfUser: function (callback) {
+      Comment.find({ 'post': req.params.id })
+      .sort('createdAt')
+      .populate('commenter')
+      .exec(callback);
+    }
+  }, function (err, results) {
+    if (err) {
+      return next(err);
+    }
 
+    res.render('profile', { title: req.user.firstName + ' ' + req.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: results.commentsToPostsOfUser });
+  });
 };
 
 exports.friend_requests_get = function (req, res, next) {

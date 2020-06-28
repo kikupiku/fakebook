@@ -60,7 +60,5 @@ module.exports = router;
 // delete posts,
 // edit user info,
 // delete user (big one!)
-// allow unfriending from everywhere
-// allow processing friend requests from find friends and friend
-// request pages alike, and refactor redirect in a similar way as with profile and timeline redirects
+// allow unfriending only from profile
 // visualssssss
