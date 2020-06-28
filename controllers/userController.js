@@ -276,29 +276,21 @@ exports.request_decline_post = [
 
 exports.request_cancel_post = [
   (req, res, next) => {
-    async.parallel({
-      friendNotToBe: function (callback) {
-        User.findById(JSON.parse(req.body.potentialFriend)._id)
-        .exec(callback);
-      },
-      referrer: function (callback) {
-      let referrerURL = req.get('Referrer');
-      let referrer = referrerURL.substring(referrerURL.lastIndexOf('/') + 1);
-      callback(null, referrer);
-      },
-    }, function (err, results) {
-      if (err) {
-        return next(err);
-      }
+      User.findById(JSON.parse(req.body.potentialFriend)._id)
+      .exec(function (err, friendNotToBe) {
 
-      let requestsReduced = results.friendNotToBe.friendRequests.filter(val => val != req.user._id);
-
-      User.update({ _id: results.friendNotToBe._id }, { friendRequests: requestsReduced }, function (err, updatedUser) {
         if (err) {
           return next(err);
         }
 
-        res.redirect(req.get('referer'));
+        let requestsReduced = friendNotToBe.friendRequests.filter(val => val != req.user._id);
+
+        User.update({ _id: friendNotToBe._id }, { friendRequests: requestsReduced }, function (err, updatedUser) {
+          if (err) {
+            return next(err);
+          }
+
+          res.redirect(req.get('referer'));
       });
     });
   },
