@@ -234,6 +234,50 @@ exports.user_profile_get = function (req, res, next) {
   });
 };
 
+exports.user_profilePOST = function (req, res, next) {
+  async.parallel({
+    user: function (callback) {
+      User.findById(req.params.id)
+      .exec(callback);
+    },
+    postsOfUser: function (callback) {
+      Post.find({ 'author': req.params.id })
+      .sort('-createdAt')
+      .exec(callback);
+    },
+  }, function (err, results) {
+    if (err) {
+      return next(err);
+    }
+    let idsOfPosts = results.postsOfUser.filter(post => post._id);
+    Comment.find({ 'post': { $in: idsOfPosts } })
+    .sort('createdAt')
+    .populate('commenter')
+    .exec(function (err, commentsToPostsOfUser) {
+
+      if (req.body.postToEditId) {
+        Post.findById(req.body.postToEditId)
+        .exec(function (err, postToEdit) {
+          if (err) {
+            return next(err);
+          }
+          res.render('profile', { title: results.user.firstName + ' ' + results.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: commentsToPostsOfUser, postToEdit });
+        });
+      } else if (req.body.commentToEditId) {
+        Comment.findById(req.body.commentToEditId)
+        .exec(function (err, commentToEdit) {
+          if (err) {
+            return next(err);
+          }
+          res.render('profile', { title: results.user.firstName + ' ' + results.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: commentsToPostsOfUser, commentToEdit });
+        })
+      } else {
+        res.render('profile', { title: results.user.firstName + ' ' + results.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: commentsToPostsOfUser });
+      }
+    });
+  });
+};
+
 exports.friend_requests_get = function (req, res, next) {
   User.find({ '_id': { '$in': req.user.friendRequests }})
   .sort([['firstName', 'ascending']])

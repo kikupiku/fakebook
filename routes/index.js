@@ -21,7 +21,8 @@ router.get('/log-out', userController.user_logout_get);
 router.delete('/users/:id', userController.user_delete);
 router.get('/users/:id/update', userController.user_update_get);
 router.put('/users/:id', userController.user_update_put);
-router.get('/users/:id', userController.user_profile_get); //user info and all of this user's posts
+router.get('/users/:id', userController.user_profile_get);
+router.post('/users/:id', userController.user_profilePOST); 
 router.get('/users/:id/friend-requests', userController.friend_requests_get);
 router.get('/users/:id/friend-list', userController.friend_list_get);
 router.post('/request-friendship', userController.request_friendship_post);
