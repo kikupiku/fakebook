@@ -204,6 +204,8 @@ FIND FRIENDS
 
 .post-container {
 	margin-bottom: 20px;
+	border: 1px solid green;
+	background-color: rgb(173,210,181)
 }
 
 .smallProfilePic {

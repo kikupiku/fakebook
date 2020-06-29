@@ -10,6 +10,7 @@ const parser = require('../cloudinary-config');
 
 /* GET home page. */
 router.get('/', userController.timeline); // signup/login page when not logged-in
+router.post('/', userController.timelinePOST); // signup/login page when not logged-in
 
 // USER ROUTES
 
@@ -32,15 +33,16 @@ router.post('/remove-friend', userController.remove_friend_post);
 // POST ROUTES
 
 router.post('/posts', parser.single('image'), postController.post_create_post);
-router.post('/posts/:id', parser.single('image'), postController.add_like_post);
-router.post('/remove-like', parser.single('image'), postController.remove_like_post);
-router.delete('/posts/:id', postController.post_delete);
+router.post('/posts/:id', postController.add_like_post);
+router.post('/remove-like', postController.remove_like_post);
+router.post('/posts/:id/edit', parser.single('image'), postController.post_update_post);
+router.post('/posts/:id', postController.post_delete_post);
 
 // COMMENT ROUTES
 
 router.post('/comments', commentController.comment_create_post);
-router.put('/comments/:id', commentController.comment_update_put);
-router.delete('/comments/:id', commentController.comment_delete);
+router.post('/comments/:id/edit', commentController.comment_update_post);
+router.post('/comments/:id', commentController.comment_delete_post);
 
 //FACEBOOK ROUTES
 

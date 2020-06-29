@@ -26,7 +26,75 @@ exports.timeline = function (req, res, next) {
           return next(err);
         }
 
-        res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends });
+        console.log('req.body.postToEdit: ', req.body.postToEditId);
+
+        if (req.body.postToEditId) {
+          Post.findById(req.body.postToEditId)
+          .exec(function (err, postToEdit) {
+            if (err) {
+              return next(err);
+            }
+            res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends, postToEdit });
+          });
+        } else if (req.body.commentToEditId) {
+          Comment.findById(req.body.commentToEditId)
+          .exec(function (err, commentToEdit) {
+            if (err) {
+              return next(err);
+            }
+            res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends, commentToEdit });
+          })
+        } else {
+          res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends });
+        }
+      });
+    });
+  } else {
+    let errors = req.flash('error');
+    res.render('signup-login', { title: 'Fakebook', errors: errors });
+  }
+};
+
+exports.timelinePOST = function (req, res, next) {
+  if (req.user) {
+    Post.find({ $or: [{ 'author': req.user._id }, { 'author': { '$in': req.user.friends } }] })
+    .sort('-createdAt')
+    .populate('author')
+    .exec(function (err, postsOfFriends) {
+      if (err) {
+        return next(err);
+      }
+
+      let IdsOfPostsOfFriends = postsOfFriends.map(post => post._id);
+      Comment.find({ 'post': { '$in': IdsOfPostsOfFriends } })
+      .sort('createdAt')
+      .populate('commenter')
+      .exec(function (err, commentsToPostsOfFriends) {
+        if (err) {
+          return next(err);
+        }
+
+        console.log('req.body.postToEdit: ', req.body.postToEditId);
+
+        if (req.body.postToEditId) {
+          Post.findById(req.body.postToEditId)
+          .exec(function (err, postToEdit) {
+            if (err) {
+              return next(err);
+            }
+            res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends, postToEdit });
+          });
+        } else if (req.body.commentToEditId) {
+          Comment.findById(req.body.commentToEditId)
+          .exec(function (err, commentToEdit) {
+            if (err) {
+              return next(err);
+            }
+            res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends, commentToEdit });
+          })
+        } else {
+          res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends, commentsToPostsOfFriends: commentsToPostsOfFriends });
+        }
       });
     });
   } else {
@@ -165,7 +233,7 @@ exports.user_profile_get = function (req, res, next) {
     .sort('createdAt')
     .populate('commenter')
     .exec(function (err, commentsToPostsOfUser) {
-      res.render('profile', { title: req.user.firstName + ' ' + req.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: commentsToPostsOfUser });
+      res.render('profile', { title: results.user.firstName + ' ' + results.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: commentsToPostsOfUser });
     });
   });
 };

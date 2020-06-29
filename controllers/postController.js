@@ -35,7 +35,7 @@ exports.post_create_post = [
   },
 ];
 
-exports.add_like_post = [   //e.g., when likes are clicked
+exports.add_like_post = [
   (req, res, next) => {
     Post.findById(req.body.postId)
     .exec(function (err, postToUpdate) {
@@ -88,6 +88,40 @@ exports.remove_like_post = [
   },
 ];
 
-exports.post_delete = function (req, res, next) {
+exports.post_update_post = [
+  body('postContent')
+  .trim()
+  .escape(),
+
+  (req, res, next) => {
+    const errors = validationResult(req);
+
+    Post.findById(req.params.id)
+    .exec(function (err, postToUpdate) {
+
+      let post = new Post({
+        author: postToUpdate.author,
+        createdAt: postToUpdate.createdAt,
+        postContent: req.body.postContent,
+        likes: postToUpdate.likes,
+        postPicture: (req.file) ? req.file.path: postToUpdate.postPicture,
+      });
+
+      if (!errors.isEmpty()) {
+        res.status(400).redirect('/', { errors: errors.array() });
+      } else {
+        post.save(err => {
+          if (err) {
+            return next(err);
+          }
+
+          res.redirect(req.get('referer'));
+        });
+      }
+    });
+  },
+];
+
+exports.post_delete_post = function (req, res, next) {
 
 };

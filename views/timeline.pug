@@ -14,28 +14,69 @@ block content
     button(type='submit' formaction='/posts' method='POST') Add Post
     
   br
+    
   div.post-list
     for post, index in postsOfFriends
       div.post-container
-        p= post.postContent
-        img.smallProfilePic(src=post.author.picture)
-        a(href='/users/' + post.author._id) #{post.author.fullName}
-        if (post.postPicture !== '')
-          img(src=post.postPicture)
-        p Posted #{post.createdAgo}
-        form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
-          input(type='hidden' id='postId' + index name='postId' value=post._id)
-          input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
-          if (post.likes.includes(currentUser._id))
-            button.like-btn(method='POST' type='submit' formaction='remove-like') Remove like
-          else
-            button.like-btn(method='POST' type='submit' formaction='/posts/' + post._id) Like
-          span  #{post.likes.length}
-          if (post.likes.length == 1)
-            span  like
-          else
-            span  likes
+        if (postToEdit)
+          if (postToEdit._id.toString() == post._id.toString())
+            form.edit-post(id='editPost' + post._id method='POST' action='/posts' + post._id + '/edit' enctype='multipart/form-data')
+              label(for='postContent') Edit the Post:
+              br
+              textarea#postContent(type='text', name='postContent', required='true') #{post.postContent}
+              br
+              label(htmlFor='pictureInput') Add or change the Image:
+              input(type='file' id='pictureInput' class='pictureInput' name='image')
+              br
+              button(type='submit' formaction='/posts' method='POST') Update Post 
+            form.cancel-edit(id='cancelEdit' method='POST' action='/')
+              input(type='hidden' id='postToEditId' name='postToEditId' value=false)
+              button(type='submit' formation='/' method='POST') Cancel
+          else    
+            p= post.postContent
+            img.smallProfilePic(src=post.author.picture)
+            a(href='/users/' + post.author._id) #{post.author.fullName}
+            if (post.postPicture !== '')
+              img(src=post.postPicture)
+            p Posted #{post.createdAgo}
+            form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
+              input(type='hidden' id='postId' + index name='postId' value=post._id)
+              input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
+              if (post.likes.includes(currentUser._id))
+                button.like-btn(method='POST' type='submit' formaction='remove-like') Remove like
+              else
+                button.like-btn(method='POST' type='submit' formaction='/posts/' + post._id) Like
+              span  #{post.likes.length}
+              if (post.likes.length == 1)
+                span  like
+              else
+                span  likes
+        else    
+          if (currentUser._id.toString() == post.author._id)
+            form(id='determinePostEdit' method='POST' action='/')
+              input(type='hidden' id='postToEditId' name='postToEditId' value=post._id)
+              button(type='submit' formation='/' method='POST') Edit
+          p= post.postContent
+          img.smallProfilePic(src=post.author.picture)
+          a(href='/users/' + post.author._id) #{post.author.fullName}
+          if (post.postPicture !== '')
+            img(src=post.postPicture)
+          p Posted #{post.createdAgo}
+          form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
+            input(type='hidden' id='postId' + index name='postId' value=post._id)
+            input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
+            if (post.likes.includes(currentUser._id))
+              button.like-btn(method='POST' type='submit' formaction='remove-like') Remove like
+            else
+              button.like-btn(method='POST' type='submit' formaction='/posts/' + post._id) Like
+            span  #{post.likes.length}
+            if (post.likes.length == 1)
+              span  like
+            else
+              span  likes
+              
         br
+          
         form.add-comment(method='POST' action='/comments' id='add-comment' + post._id + index)
           label(for='commentContent') Write a Comment:
           br
@@ -43,11 +84,33 @@ block content
           input(type='hidden' name='commentedPostId' value=post._id)
           br
           button(type='submit' formaction='/comments' method='POST') Add Comment
+          
         for comment in commentsToPostsOfFriends
           if (comment.post._id.toString() == post._id)
             div.commentContainer
-              p= comment.commentContent
-              img.smallerProfilePic(src=comment.commenter.picture)
-              a(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
-              p Commented #{comment.createdAgo}
+              if (commentToEdit)
+                if (commentToEdit._id.toString() == comment._id.toString())
+                  form.edit-comment(id='editComment' + comment._id method='POST' action='/comments' + comment._id + '/edit')
+                    label(for='postContent') Edit your Comment:
+                    br
+                    textarea#commentContent(type='text', name='commentContent', required='true') #{comment.commentContent}
+                    br
+                    button(type='submit' formaction='/comments' method='POST') Update Comment 
+                  form.cancel-edit(id='cancelEdit' method='POST' action='/')
+                    input(type='hidden' id='commentToEditId' name='commentToEditId' value=false)
+                    button(type='submit' formation='/' method='POST') Cancel
+                else    
+                  p= comment.commentContent
+                  img.smallerProfilePic(src=comment.commenter.picture)
+                  a(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
+                  p Commented #{comment.createdAgo}
+              else
+                if (currentUser._id.toString() == comment.commenter._id)
+                  form(id='determineCommentEdit' method='POST' action='/')
+                    input(type='hidden' id='commentToEditId' name='commentToEditId' value=comment._id)
+                    button(type='submit' formation='/' method='POST') Edit Comment
+                p= comment.commentContent
+                img.smallerProfilePic(src=comment.commenter.picture)
+                a(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
+                p Commented #{comment.createdAgo}
     

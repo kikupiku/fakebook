@@ -34,10 +34,10 @@ exports.comment_create_post = [
   },
 ];
 
-exports.comment_update_put = [
+exports.comment_update_post = [
 
 ];
 
-exports.comment_delete = function (req, res, next) {
+exports.comment_delete_post = function (req, res, next) {
 
 };
