@@ -105,12 +105,13 @@ exports.post_update_post = [
         postContent: req.body.postContent,
         likes: postToUpdate.likes,
         postPicture: (req.file) ? req.file.path: postToUpdate.postPicture,
+        _id: postToUpdate._id,
       });
 
       if (!errors.isEmpty()) {
         res.status(400).redirect('/', { errors: errors.array() });
       } else {
-        post.save(err => {
+        Post.findByIdAndUpdate(req.params.id, post, {}, function (err, updatedPost) {
           if (err) {
             return next(err);
           }

@@ -28,7 +28,7 @@ block content
               label(htmlFor='pictureInput') Add or change the Image:
               input(type='file' id='pictureInput' class='pictureInput' name='image')
               br
-              button(type='submit' formaction='/posts' method='POST') Update Post 
+              button(type='submit' formaction='/posts/' + post._id + '/edit' method='POST') Update Post 
             form.cancel-edit(id='cancelEdit' method='POST' action='/')
               input(type='hidden' id='postToEditId' name='postToEditId' value=false)
               button(type='submit' formation='/' method='POST') Cancel
@@ -95,7 +95,7 @@ block content
                     br
                     textarea#commentContent(type='text', name='commentContent', required='true') #{comment.commentContent}
                     br
-                    button(type='submit' formaction='/comments' method='POST') Update Comment 
+                    button(type='submit' formaction='/comments/' + comment._id + '/edit' method='POST') Update Comment 
                   form.cancel-edit(id='cancelEdit' method='POST' action='/')
                     input(type='hidden' id='commentToEditId' name='commentToEditId' value=false)
                     button(type='submit' formation='/' method='POST') Cancel

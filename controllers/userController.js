@@ -26,8 +26,6 @@ exports.timeline = function (req, res, next) {
           return next(err);
         }
 
-        console.log('req.body.postToEdit: ', req.body.postToEditId);
-
         if (req.body.postToEditId) {
           Post.findById(req.body.postToEditId)
           .exec(function (err, postToEdit) {
@@ -73,8 +71,6 @@ exports.timelinePOST = function (req, res, next) {
         if (err) {
           return next(err);
         }
-
-        console.log('req.body.postToEdit: ', req.body.postToEditId);
 
         if (req.body.postToEditId) {
           Post.findById(req.body.postToEditId)
