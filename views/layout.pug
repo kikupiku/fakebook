@@ -14,6 +14,9 @@ html
             a(href='/users') Find Friends
           li 
             a(href='/users/' + currentUser._id + '/friend-requests') Friend Requests
+            if (currentUser.friendRequests.length)
+              span.connector : 
+              span.noOfRequests #{currentUser.friendRequests.length}
           li 
             a(href='/users/' + currentUser._id + '/friend-list') My Friends
         div.userPicture

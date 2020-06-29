@@ -28,7 +28,7 @@ exports.comment_create_post = [
           return next(err);
         }
 
-        res.redirect('/');
+        res.redirect(req.get('referer'));
       });
     }
   },

@@ -27,12 +27,13 @@ router.post('/request-friendship', userController.request_friendship_post);
 router.post('/request-accept', userController.request_accept_post);
 router.post('/request-decline', userController.request_decline_post);
 router.post('/request-cancel', userController.request_cancel_post);
+router.post('/remove-friend', userController.remove_friend_post);
 
 // POST ROUTES
 
 router.post('/posts', parser.single('image'), postController.post_create_post);
 router.post('/posts/:id', parser.single('image'), postController.add_like_post);
-router.post('/remove-like', parser.single('imsge'), postController.remove_like_post);
+router.post('/remove-like', parser.single('image'), postController.remove_like_post);
 router.delete('/posts/:id', postController.post_delete);
 
 // COMMENT ROUTES
@@ -52,13 +53,10 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 module.exports = router;
 
 // TODO:
-// build profile with posts and comments,
-// refactor redirect to be conditional based on whether the referrer is profile or timeline (so that it goes back to where the user was)
 // edit comments,
 // delete comments,
 // edit posts,
 // delete posts,
 // edit user info,
 // delete user (big one!)
-// allow unfriending only from profile
 // visualssssss

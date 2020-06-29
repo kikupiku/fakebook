@@ -8,7 +8,7 @@ block content
 
     for potentialFriend, index in potentialFriends
       div.friendContainer
-        p #{potentialFriend.fullName}
+        a(href='/users/' + potentialFriend._id) #{potentialFriend.fullName}
         img(src=potentialFriend.picture)
         if (currentUser.friendRequests.find(request => request == potentialFriend._id))
           p Respond to request

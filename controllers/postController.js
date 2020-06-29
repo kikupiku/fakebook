@@ -29,7 +29,7 @@ exports.post_create_post = [
           return next(err);
         }
 
-        res.redirect('/');
+        res.redirect(req.get('referer'));
       });
     }
   },
@@ -55,7 +55,7 @@ exports.add_like_post = [   //e.g., when likes are clicked
           return next(err);
         }
 
-        res.redirect('/');
+        res.redirect(req.get('referer'));
       });
     });
   },
@@ -82,7 +82,7 @@ exports.remove_like_post = [
           return next(err);
         }
 
-        res.redirect('/');
+        res.redirect(req.get('referer'));
       });
     });
   },

@@ -152,22 +152,21 @@ exports.user_profile_get = function (req, res, next) {
       .exec(callback);
     },
     postsOfUser: function (callback) {
-      Post.find({ '_id': req.params.id })
+      Post.find({ 'author': req.params.id })
       .sort('-createdAt')
       .exec(callback);
     },
-    commentsToPostsOfUser: function (callback) {
-      Comment.find({ 'post': req.params.id })
-      .sort('createdAt')
-      .populate('commenter')
-      .exec(callback);
-    }
   }, function (err, results) {
     if (err) {
       return next(err);
     }
-
-    res.render('profile', { title: req.user.firstName + ' ' + req.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: results.commentsToPostsOfUser });
+    let idsOfPosts = results.postsOfUser.filter(post => post._id);
+    Comment.find({ 'post': { $in: idsOfPosts } })
+    .sort('createdAt')
+    .populate('commenter')
+    .exec(function (err, commentsToPostsOfUser) {
+      res.render('profile', { title: req.user.firstName + ' ' + req.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: commentsToPostsOfUser });
+    });
   });
 };
 
@@ -215,7 +214,10 @@ exports.request_friendship_post = [
       });
 
       User.findByIdAndUpdate(potentialFriend._id, user, {}, function (err, updatedUser) {
-        res.redirect('/users');
+        if (err) {
+          return next(err);
+        }
+        res.redirect(req.get('referer'));
       });
     });
   },
@@ -255,7 +257,7 @@ exports.request_accept_post = [
 
       User.findByIdAndUpdate(newFriend._id, friend, {}, function (err, updatedFriend) {
         User.findByIdAndUpdate(req.user._id, user, {}, function (err, updatedUser) {
-          res.redirect('/users/' + req.user._id + '/friend-list');
+          res.redirect(req.get('referer'));
         });
       });
     })
@@ -313,6 +315,35 @@ exports.request_cancel_post = [
           }
 
           res.redirect(req.get('referer'));
+      });
+    });
+  },
+];
+
+exports.remove_friend_post = [
+  (req, res, next) => {
+    console.log('soonExFriendsId: ', req.body.soonExFriend._id);
+    User.findOne({ _id: req.body.soonExFriend })
+    .exec(function (err, soonExFriend) {
+      if (err) {
+        return next(err);
+      }
+      console.log('soonExFriend after finding: ', soonExFriend);
+
+      let exFriendFriendsReduced = soonExFriend.friends.filter(val => val != req.user._id);
+      User.update({ _id: soonExFriend._id }, { friends: exFriendFriendsReduced }, function (err, updatedUser) {
+        if (err) {
+          return next(err);
+        }
+
+        let userFriendsReduced = req.user.friends.filter(val => val != soonExFriend._id);
+        User.update({ _id: req.user._id }, { friends: userFriendsReduced }, function (err, updatedCurrentUser) {
+          if (err) {
+            return next(err);
+          }
+
+          res.redirect(req.get('referer'));
+        });
       });
     });
   },

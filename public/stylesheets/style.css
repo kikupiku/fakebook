@@ -44,6 +44,10 @@ q:before, q:after {
 	content: none;
 }
 
+textarea {
+	resize: none;
+}
+
 /* ================================================================
 MAIN
 ================================================================= */
@@ -89,13 +93,18 @@ li {
   padding-right: 15px;
 }
 
-.menu li a {
+.menu li a,
+.connector {
   color: rgba(255,255,255,.75);
   line-height: 2.5;
 }
 
 .menu li a:hover {
   color: white;
+}
+
+.noOfRequests {
+	color: rgb(189,96,67);
 }
 
 .userPicture {
@@ -202,6 +211,7 @@ FIND FRIENDS
 	width: 25px;
 	border-radius: 50%;
 	object-fit: cover;
+	z-index: 99;
 }
 
 .smallerProfilePic {
