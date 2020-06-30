@@ -18,7 +18,8 @@ router.get('/users', userController.find_friends_get); //all users list
 router.post('/users', parser.single('image'), userController.user_create_post);
 router.post('/log-in', userController.user_login);
 router.get('/log-out', userController.user_logout_get);
-router.delete('/users/:id', userController.user_delete);
+router.get('/users/:id/delete', userController.user_delete_get);
+router.post('/users/:id/delete', userController.user_delete_post);
 router.get('/users/:id/update', userController.user_update_get);
 router.put('/users/:id', userController.user_update_put);
 router.get('/users/:id', userController.user_profile_get);
@@ -57,6 +58,6 @@ module.exports = router;
 
 // TODO:
 // edit user info,
-// delete user (big one!)
+// make a photo gallery (without commenting or deleting)
 // visualssssss
 // seeding

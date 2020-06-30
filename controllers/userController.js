@@ -17,6 +17,8 @@ exports.timeline = function (req, res, next) {
         return next(err);
       }
 
+      console.log('req.user: ', req.user);
+
       let IdsOfPostsOfFriends = postsOfFriends.map(post => post._id);
       Comment.find({ 'post': { '$in': IdsOfPostsOfFriends } })
       .sort('createdAt')
@@ -174,7 +176,6 @@ exports.user_create_post = [
               res.render('timeline', { title: 'Timeline', currentUser: req.user, postsOfFriends: postsOfFriends });
             });
           });
-
         });
       }
     });
@@ -194,8 +195,96 @@ exports.user_logout_get = function (req, res, next) {
   res.redirect('/');
 };
 
-exports.user_delete = function (req, res, next) {
+exports.user_delete_get = function (req, res, next) {
+  res.render('userDelete', { title: 'Delete Account', currentUser: req.user });
+};
 
+exports.user_delete_post = function (req, res, next) {
+  // to delete: user, their posts, comments, commentstotheirposts, friendships, requests
+  User.findById(req.body.userToDeleteId)
+  .exec(function (err, userToDelete) {
+
+    async.parallel({
+      postsOfUser: function (callback) {
+        Post.find({ 'author': userToDelete })
+        .exec(callback);
+      },
+      commentsOfUser: function (callback) {
+        Comment.find({ 'commenter': userToDelete })
+        .exec(callback);
+      },
+      friendsOfUser: function (callback) {
+        User.find({ friends: userToDelete._id })
+        .exec(callback);
+      },
+      friendshipsRequestedByUser: function (callback) {
+        User.find({ friendRequests: userToDelete._id })
+        .exec(callback);
+      },
+    }, function (err, results) {
+      if (err) {
+        return next(err);
+      }
+
+      Comment.find({ 'post': { '$in': results.postsOfUser } })
+      .exec(function (err, commentsToPostsOfUser) {
+        if (err) {
+          return next(err);
+        }
+
+        let postIds = results.postsOfUser.map(post => post._id);
+        let userCommentIds = results.commentsOfUser.map(comment => comment._id);
+        let commentIds = commentsToPostsOfUser.map(comment => comment._id);
+
+        // results.friendsOfUser.forEach((friend) => {
+        //   let reducedFriendList = friend.friends.filter(val => val != userToDelete._id);
+        //   User.update({ _id: friend._id }, { friends: reducedFriendList });
+        // });
+
+        // results.friendshipsRequestedByUser.forEach((requestee) => {
+        //   let reducedFriendRequestList = requestee.friendRequests.filter(val => val != userToDelete._id);
+        //   User.update({ _id: requestee._id }, { friendRequests: reducedFriendRequestList });
+        // });
+
+        async.parallel({
+          postsDelete: function (callback) {
+            Post.deleteMany({ _id: { '$in': postIds } })
+            .exec(callback);
+          },
+          userCommentsDelete: function (callback) {
+            Comment.deleteMany({ _id: { '$in': userCommentIds } })
+            .exec(callback);
+          },
+          commentsDelete: function (callback) {
+            Comment.deleteMany({ _id: { '$in': commentIds } })
+            .exec(callback);
+          },
+          friendsToDelete: function (callback) {
+            results.friendsOfUser.forEach((friend) => {
+              let reducedFriendList = friend.friends.filter(val => val != userToDelete._id);
+              User.update({ _id: friend._id }, { friends: reducedFriendList })
+              .exec(callback);
+            });
+          },
+          friendRequestsToDelete: function (callback) {
+            results.friendshipsRequestedByUser.forEach((requestee) => {
+              let reducedFriendRequestList = requestee.friendRequests.filter(val => val != userToDelete._id);
+              User.update({ _id: requestee._id }, { friendRequests: reducedFriendRequestList })
+              .exec(callback);
+            });
+          },
+        }, function (err, deletedStuff) {
+          User.findByIdAndRemove(req.params.id, function deleteUser(err) {
+            if (err) {
+              return next(err);
+            }
+
+            res.redirect('/');
+          });
+        });
+      });
+    });
+  });
 };
 
 exports.user_update_get = function (req, res, next) {
@@ -339,7 +428,7 @@ exports.request_accept_post = [
         return next(err);
       }
 
-      let requestsReduced = req.user.friendRequests.filter((val => val != newFriend._id));
+      let requestsReduced = req.user.friendRequests.filter(val => val != newFriend._id);
 
       let friend = new User({
         firstName: newFriend.firstName,

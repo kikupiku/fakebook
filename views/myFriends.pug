@@ -7,7 +7,7 @@ block content
   div.myFriends
     for friend in friends
       div.friendContainer
-        p= friend.fullName
+        a(href='/users/' + friend._id)= friend.fullName
         img(src=friend.picture)
 
 
