@@ -124,5 +124,24 @@ exports.post_update_post = [
 ];
 
 exports.post_delete_post = function (req, res, next) {
+  Comment.find({ 'post': req.body.postToDeleteId })
+  .exec(function (err, commentsOfPost) {
 
+    Post.findByIdAndRemove(req.body.postToDeleteId, function deletePost(err) {
+      if (err) {
+        return next(err);
+      }
+
+      let commentIds = commentsOfPost.map(comment => comment.id);
+
+      Comment.deleteMany({ '_id': { $in: commentIds } })
+      .exec(function (err, deletedComments) {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect(req.get('referer'));
+      });
+    });
+  });
 };

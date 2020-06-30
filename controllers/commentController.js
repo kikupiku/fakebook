@@ -72,5 +72,11 @@ exports.comment_update_post = [
 ];
 
 exports.comment_delete_post = function (req, res, next) {
+  Comment.findByIdAndRemove(req.body.commentToDeleteId, function deleteComment(err) {
+      if (err) {
+        return next(err);
+      }
 
+      res.redirect(req.get('referer'));
+    });
 };

@@ -22,7 +22,7 @@ router.delete('/users/:id', userController.user_delete);
 router.get('/users/:id/update', userController.user_update_get);
 router.put('/users/:id', userController.user_update_put);
 router.get('/users/:id', userController.user_profile_get);
-router.post('/users/:id', userController.user_profilePOST); 
+router.post('/users/:id', userController.user_profilePOST);
 router.get('/users/:id/friend-requests', userController.friend_requests_get);
 router.get('/users/:id/friend-list', userController.friend_list_get);
 router.post('/request-friendship', userController.request_friendship_post);
@@ -37,13 +37,13 @@ router.post('/posts', parser.single('image'), postController.post_create_post);
 router.post('/posts/:id', postController.add_like_post);
 router.post('/remove-like', postController.remove_like_post);
 router.post('/posts/:id/edit', parser.single('image'), postController.post_update_post);
-router.post('/posts/:id', postController.post_delete_post);
+router.post('/posts/:id/delete', postController.post_delete_post);
 
 // COMMENT ROUTES
 
 router.post('/comments', commentController.comment_create_post);
 router.post('/comments/:id/edit', commentController.comment_update_post);
-router.post('/comments/:id', commentController.comment_delete_post);
+router.post('/comments/:id/delete', commentController.comment_delete_post);
 
 //FACEBOOK ROUTES
 
@@ -56,10 +56,7 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 module.exports = router;
 
 // TODO:
-// edit comments,
-// delete comments,
-// edit posts,
-// delete posts,
 // edit user info,
 // delete user (big one!)
 // visualssssss
+// seeding
