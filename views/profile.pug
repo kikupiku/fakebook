@@ -82,6 +82,9 @@ block content
             form(id='determinePostEdit' method='POST' action='/users/' + user._id)
               input(type='hidden' id='postToEditId' name='postToEditId' value=post._id)
               button(type='submit' formation='/users/' + user._id method='POST') Edit
+            form(id='deletePost' method='POST' action='/posts/' + post._id + '/delete')
+              input(type='hidden' id='postToDeleteId' name='postToDeleteId' value=post._id)
+              button(type='submit' formation='/posts/' + post._id + '/delete' method='POST') Delete Post
           p= post.postContent
           img.smallProfilePic(src=post.author.picture)
           a(href='/users/' + post.author._id) #{post.author.fullName}
@@ -134,6 +137,9 @@ block content
                   form(id='determineCommentEdit' method='POST' action='/users/' + user._id)
                     input(type='hidden' id='commentToEditId' name='commentToEditId' value=comment._id)
                     button(type='submit' formation='/users/' + user._id method='POST') Edit Comment
+                  form(id='deleteComment' method='POST' action='/comments/' + comment._id + '/delete')
+                    input(type='hidden' id='commentToDeleteId' name='commentToDeleteId' value=comment._id)
+                    button(type='submit' formation='/comments/' + comment._id + '/delete' method='POST') Delete Comment
                 p= comment.commentContent
                 img.smallerProfilePic(src=comment.commenter.picture)
                 a(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
