@@ -46,7 +46,7 @@ block content
       div.post-container
         if (postToEdit)
           if (postToEdit._id.toString() == post._id.toString())
-            form.edit-post(id='editPost' + post._id method='POST' action='/posts' + post._id + '/edit' enctype='multipart/form-data')
+            form.edit-post(id='editPost' + post._id method='POST' action='/posts/' + post._id + '/edit' enctype='multipart/form-data')
               label(for='postContent') Edit the Post:
               br
               textarea#postContent(type='text', name='postContent', required='true') #{post.postContent}

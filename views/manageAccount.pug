@@ -1,0 +1,50 @@
+extends layout
+
+block content
+  h1= title
+  
+  if (errors)
+    for error in errors
+      p= error.msg
+  
+  div.info-container
+    p Personal Information
+    form(id='editPersonalInfo' method='POST' action='/users' + currentUser._id + '/update-personal-info' enctype='multipart/form-data')
+      input(type='hidden' name='userToEditId' value=currentUser._id)
+      label(for='editFirstName') * First Name
+      input(type='text' id='editFirstName' name='firstName' value=currentUser.firstName)
+      br
+      label(for='editLastName') * Last Name
+      input(type='text' id='editLastName' name='lastName' value=currentUser.lastName)
+      if (currentUser.email)
+        br
+        label(for='editEmail') * Email
+        input(type='text' name='email' value=currentUser.email)
+      br
+      label(htmlFor='pictureInput') Change Your Profile Picture:
+      input(type='file' id='pictureInput' class='pictureInput' name='image')
+      br
+      button(type='submit' formaction='/users/' + currentUser._id + '/update-personal-info' method='POST') Save Changes
+      p * - fields cannot be left blank
+    
+  br
+    
+  if (currentUser.email)  
+    div.info-container
+      p Change Your Password
+      form(id='editPassword' method='POST' action='/users/' + currentUser._id + '/update-password')
+        input(type='hidden' name='userToEditId' value=currentUser._id)
+        label(for='newPassword') New Password
+        input(id='newPassword' type='password' name='newPassword')
+        br
+        label(for='confirmNewPassword') New Password
+        input(id='confirmNewPassword' type='password' name='confirmNewPassword')
+        br
+        button(type='submit' formaction='/users/' + currentUser._id + '/update-password' method='POST') Change Password
+    br
+    if (passwordChangeMsg)
+      p= passwordChangeMsg
+      
+  br
+    
+  a(href='/users/' + currentUser._id + '/delete') Delete Your Account

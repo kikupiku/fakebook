@@ -10,20 +10,26 @@ const parser = require('../cloudinary-config');
 
 /* GET home page. */
 router.get('/', userController.timeline); // signup/login page when not logged-in
-router.post('/', userController.timelinePOST); // signup/login page when not logged-in
+router.post('/', userController.timelinePOST);
 
 // USER ROUTES
 
-router.get('/users', userController.find_friends_get); //all users list
 router.post('/users', parser.single('image'), userController.user_create_post);
+// authentication routes
 router.post('/log-in', userController.user_login);
 router.get('/log-out', userController.user_logout_get);
+// user delete routes
 router.get('/users/:id/delete', userController.user_delete_get);
 router.post('/users/:id/delete', userController.user_delete_post);
-router.get('/users/:id/update', userController.user_update_get);
-router.put('/users/:id', userController.user_update_put);
+// user update routes
+router.get('/users/:id/manage', userController.user_manage_get);
+router.post('/users/:id/update-personal-info', parser.single('image'), userController.user_personal_info_update_post);
+router.post('/users/:id/update-password', userController.user_password_update_post);
+// profile routes
 router.get('/users/:id', userController.user_profile_get);
 router.post('/users/:id', userController.user_profilePOST);
+// friend themed routes
+router.get('/users', userController.find_friends_get); // instead of all users list
 router.get('/users/:id/friend-requests', userController.friend_requests_get);
 router.get('/users/:id/friend-list', userController.friend_list_get);
 router.post('/request-friendship', userController.request_friendship_post);

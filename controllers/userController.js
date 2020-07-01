@@ -3,7 +3,7 @@ let Post = require('../models/post');
 let Comment = require('../models/comment');
 
 let async = require('async');
-const { body, validationResult } = require('express-validator');
+const { check, body, validationResult } = require('express-validator');
 const passport = require('../passport');
 const bcrypt = require('bcryptjs');
 
@@ -16,8 +16,6 @@ exports.timeline = function (req, res, next) {
       if (err) {
         return next(err);
       }
-
-      console.log('req.user: ', req.user);
 
       let IdsOfPostsOfFriends = postsOfFriends.map(post => post._id);
       Comment.find({ 'post': { '$in': IdsOfPostsOfFriends } })
@@ -101,20 +99,6 @@ exports.timelinePOST = function (req, res, next) {
   }
 };
 
-exports.find_friends_get = function (req, res, next) {
-  let userAsArray = [req.user._id];
-  let userAndTheirFriends = req.user.friends.concat(userAsArray);
-  User.find({ '_id': { '$nin': userAndTheirFriends } })
-  .sort([['firstName', 'ascending']])
-  .exec(function(err, potentialFriends) {
-    if (err) {
-      return next(err);
-    }
-
-    res.render('findFriends', { title: 'Find Friends', potentialFriends: potentialFriends, currentUser: req.user });
-  });
-};
-
 exports.user_create_post = [
   body('firstName')
   .trim()
@@ -158,7 +142,7 @@ exports.user_create_post = [
       });
 
       if (!errors.isEmpty()) {
-        res.status(400).redirect('/', { errors: errors.array() });
+        res.redirect('/', { errors: errors.array() });
       } else {
         user.save(err => {
           if (err) {
@@ -200,7 +184,6 @@ exports.user_delete_get = function (req, res, next) {
 };
 
 exports.user_delete_post = function (req, res, next) {
-  // to delete: user, their posts, comments, commentstotheirposts, friendships, requests
   User.findById(req.body.userToDeleteId)
   .exec(function (err, userToDelete) {
 
@@ -235,16 +218,6 @@ exports.user_delete_post = function (req, res, next) {
         let postIds = results.postsOfUser.map(post => post._id);
         let userCommentIds = results.commentsOfUser.map(comment => comment._id);
         let commentIds = commentsToPostsOfUser.map(comment => comment._id);
-
-        // results.friendsOfUser.forEach((friend) => {
-        //   let reducedFriendList = friend.friends.filter(val => val != userToDelete._id);
-        //   User.update({ _id: friend._id }, { friends: reducedFriendList });
-        // });
-
-        // results.friendshipsRequestedByUser.forEach((requestee) => {
-        //   let reducedFriendRequestList = requestee.friendRequests.filter(val => val != userToDelete._id);
-        //   User.update({ _id: requestee._id }, { friendRequests: reducedFriendRequestList });
-        // });
 
         async.parallel({
           postsDelete: function (callback) {
@@ -287,14 +260,116 @@ exports.user_delete_post = function (req, res, next) {
   });
 };
 
-exports.user_update_get = function (req, res, next) {
-
+exports.user_manage_get = function (req, res, next) {
+  let errors = req.flash('error');
+  let confirmationFail = req.flash('confirmationFail');
+  res.render('manageAccount', { title: 'Manage Your Account', currentUser: req.user, errors: errors, confirmationFail });
 };
 
-exports.user_update_put = [
+exports.user_personal_info_update_post = [
+  body('firstName')
+  .trim()
+  .isLength({ min: 1 })
+  .withMessage('Please enter your first name')
+  .escape(),
+
+  body('lastName')
+  .trim()
+  .isLength({ min: 1 })
+  .withMessage('You cannot leave your last name empty')
+  .escape(),
+
+  check('email')
+  .optional()
+  .isEmail()
+  .withMessage('Must be valid email'),
 
   (req, res, next) => {
+    const errors = validationResult(req);
+    let user;
+    if (req.user.password) { // for local users
 
+      user = new User({
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email,
+        password: req.user.password,
+        friends: req.user.friends,
+        friendRequests: req.user.friendRequests,
+        picture: (!req.file) ? req.user.picture : req.file.path,
+        _id: req.user._id,
+      });
+    } else {
+      user = new User({  // for users logging in with facebook
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        fbId: req.user.fbId,
+        friends: req.user.friends,
+        friendRequests: req.user.friendRequests,
+        picture: (!req.file) ? req.user.picture : req.file.path,
+        _id: req.user._id,
+      });
+    }
+
+    if (!errors.isEmpty()) {
+      req.flash('error', errors.array());
+      res.redirect('/users/' + req.user._id + '/manage');
+    } else {
+      User.findByIdAndUpdate(req.body.userToEditId, user, {}, function (err, updatedUser) {
+        if (err) {
+          return next(err);
+        }
+
+        res.redirect('/users/' + req.user._id + '/manage');
+      });
+    }
+  },
+];
+
+exports.user_password_update_post = [
+  body('newPassword')
+  .trim()
+  .isLength({ min: 5 })
+  .withMessage('Your password needs to be at least 5 characters long'),
+
+  (req, res, next) => {
+    if (req.body.newPassword === req.body.confirmNewPassword) {
+
+      bcrypt.hash(req.body.newPassword, 10, (err, hashedPassword) => {
+        if (err) {
+          return next(err);
+        }
+
+        const errors = validationResult(req);
+
+        let user = new User({
+          firstName: req.user.firstName,
+          lastName: req.user.lastName,
+          email: req.user.email,
+          password: hashedPassword,
+          friends: req.user.friends,
+          friendRequests: req.user.friendRequests,
+          picture: req.user.picture,
+          _id: req.user._id,
+        });
+
+        if (!errors.isEmpty()) {
+          req.flash('error', errors.array());
+          res.redirect('/users/' + req.user._id + '/manage');
+        } else {
+          User.findByIdAndUpdate(req.body.userToEditId, user, {}, function (err, updatedUser) {
+            if (err) {
+              return next(err);
+            }
+            let passwordChangeMsg = 'Password change successful!';
+            res.render('manageAccount', { title: 'Manage Your Account', currentUser: req.user, passwordChangeMsg });
+          });
+        }
+      });
+    } else {
+      let passwordChangeMsg = 'The confirmation does not match your new password';
+      res.render('manageAccount', { title: 'Manage Your Account', currentUser: req.user, passwordChangeMsg });
+    }
   },
 ];
 
@@ -364,6 +439,22 @@ exports.user_profilePOST = function (req, res, next) {
         res.render('profile', { title: results.user.firstName + ' ' + results.user.lastName, user: results.user, currentUser: req.user, postsOfUser: results.postsOfUser, commentsToPostsOfUser: commentsToPostsOfUser });
       }
     });
+  });
+};
+
+exports.find_friends_get = function (req, res, next) {
+  let userAsArray = [req.user._id];
+  let userAndTheirFriends = req.user.friends.concat(userAsArray);
+  User.find({ '_id': { '$nin': userAndTheirFriends } })
+  .sort([['firstName', 'ascending']])
+  .exec(function(err, potentialFriends) {
+    if (err) {
+      return next(err);
+    }
+
+    console.log('flash!, ', req.flash('message'));
+
+    res.render('findFriends', { title: 'Find Friends', potentialFriends: potentialFriends, currentUser: req.user });
   });
 };
 
