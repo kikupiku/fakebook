@@ -10,6 +10,7 @@ let UserSchema = new Schema({
   friends: [{ type: String }],
   friendRequests: [{ type: String }],
   picture: { type: String, required: false, default: 'https://res.cloudinary.com/kikupiku/image/upload/v1592919291/fakebook/default-user_s7rozl.png' },
+  gallery: [{ type: String }],
 });
 
 UserSchema

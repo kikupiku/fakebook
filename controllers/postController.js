@@ -21,16 +21,36 @@ exports.post_create_post = [
       postPicture: (req.file) ? req.file.path: '',
     });
 
-    if (!errors.isEmpty()) {
-      res.status(400).redirect('/', { errors: errors.array() });
-    } else {
-      post.save(err => {
+    if (req.file) {
+      User.update({ _id: req.user._id }, { gallery: req.user.gallery.concat([req.file.path]) }, function (err, updatedUser) {
         if (err) {
           return next(err);
         }
 
-        res.redirect(req.get('referer'));
+        if (!errors.isEmpty()) {
+          res.status(400).redirect('/', { errors: errors.array() });
+        } else {
+          post.save(err => {
+            if (err) {
+              return next(err);
+            }
+
+            res.redirect(req.get('referer'));
+          });
+        }
       });
+    } else {
+      if (!errors.isEmpty()) {
+        res.status(400).redirect('/', { errors: errors.array() });
+      } else {
+        post.save(err => {
+          if (err) {
+            return next(err);
+          }
+
+          res.redirect(req.get('referer'));
+        });
+      }
     }
   },
 ];
@@ -108,17 +128,39 @@ exports.post_update_post = [
         _id: postToUpdate._id,
       });
 
-      if (!errors.isEmpty()) {
-        res.status(400).redirect('/', { errors: errors.array() });
-      } else {
-        Post.findByIdAndUpdate(req.params.id, post, {}, function (err, updatedPost) {
+      if (req.file) {
+        User.update({ _id: req.user._id }, { gallery: req.user.gallery.concat([req.file.path]) }, function (err, updatedUser) {
           if (err) {
             return next(err);
           }
 
-          res.redirect(req.get('referer'));
+          if (!errors.isEmpty()) {
+            res.status(400).redirect('/', { errors: errors.array() });
+          } else {
+            Post.findByIdAndUpdate(req.params.id, post, {}, function (err, updatedPost) {
+              if (err) {
+                return next(err);
+              }
+
+              res.redirect(req.get('referer'));
+            });
+          }
         });
+      } else {
+
+        if (!errors.isEmpty()) {
+          res.status(400).redirect('/', { errors: errors.array() });
+        } else {
+          Post.findByIdAndUpdate(req.params.id, post, {}, function (err, updatedPost) {
+            if (err) {
+              return next(err);
+            }
+
+            res.redirect(req.get('referer'));
+          });
+        }
       }
+
     });
   },
 ];

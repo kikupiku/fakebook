@@ -37,6 +37,8 @@ router.post('/request-accept', userController.request_accept_post);
 router.post('/request-decline', userController.request_decline_post);
 router.post('/request-cancel', userController.request_cancel_post);
 router.post('/remove-friend', userController.remove_friend_post);
+// user photo gallery
+router.get('/users/:id/gallery', userController.user_gallery_get);
 
 // POST ROUTES
 
@@ -63,7 +65,6 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 module.exports = router;
 
 // TODO:
-// edit user info,
 // make a photo gallery (without commenting or deleting)
 // visualssssss
 // seeding

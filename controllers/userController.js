@@ -139,6 +139,7 @@ exports.user_create_post = [
         friends: [],
         friendRequests: [],
         picture: (!req.file) ? 'https://res.cloudinary.com/kikupiku/image/upload/v1592919291/fakebook/default-user_s7rozl.png' : req.file.path,
+        gallery: (!req.file) ? [] : [req.file.path],
       });
 
       if (!errors.isEmpty()) {
@@ -298,6 +299,7 @@ exports.user_personal_info_update_post = [
         friendRequests: req.user.friendRequests,
         picture: (!req.file) ? req.user.picture : req.file.path,
         _id: req.user._id,
+        gallery: (!req.file) ? req.user.gallery : req.user.gallery.concat([req.file.path]),
       });
     } else {
       user = new User({  // for users logging in with facebook
@@ -308,6 +310,7 @@ exports.user_personal_info_update_post = [
         friendRequests: req.user.friendRequests,
         picture: (!req.file) ? req.user.picture : req.file.path,
         _id: req.user._id,
+        gallery: (!req.file) ? req.user.gallery : req.user.gallery.concat([req.file.path]),
       });
     }
 
@@ -351,6 +354,7 @@ exports.user_password_update_post = [
           friendRequests: req.user.friendRequests,
           picture: req.user.picture,
           _id: req.user._id,
+          gallery: req.user.gallery,
         });
 
         if (!errors.isEmpty()) {
@@ -499,6 +503,7 @@ exports.request_friendship_post = [
         friendRequests: potentialFriend.friendRequests.concat([req.user._id]),
         picture: potentialFriend.picture,
         _id: potentialFriend._id,
+        gallery: potentialFriend.gallery,
       });
 
       User.findByIdAndUpdate(potentialFriend._id, user, {}, function (err, updatedUser) {
@@ -530,6 +535,7 @@ exports.request_accept_post = [
         friendRequests: newFriend.friendRequests,
         picture: newFriend.picture,
         _id: newFriend._id,
+        gallery: newFriend.gallery,
       });
 
       let user = new User({
@@ -541,6 +547,7 @@ exports.request_accept_post = [
         friendRequests: requestsReduced,
         picture: req.user.picture,
         _id: req.user._id,
+        gallery: req.user.gallery,
       });
 
       User.findByIdAndUpdate(newFriend._id, friend, {}, function (err, updatedFriend) {
@@ -636,3 +643,11 @@ exports.remove_friend_post = [
     });
   },
 ];
+
+exports.user_gallery_get = function (req, res, next) {
+  console.log('YO');
+  User.findById(req.params.id)
+  .exec(function (err, user) {
+    res.render('gallery', { title: 'Gallery', user: user });
+  });
+};
