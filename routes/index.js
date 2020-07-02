@@ -65,6 +65,5 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 module.exports = router;
 
 // TODO:
-// make a photo gallery (without commenting or deleting)
-// visualssssss
 // seeding
+// visualssssss
