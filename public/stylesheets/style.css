@@ -55,7 +55,7 @@ textarea  {
 }
 
 /* ================================================================
-MAIN
+GENERAL AND LAYOUT
 ================================================================= */
 
 h1 {
@@ -101,14 +101,18 @@ header {
 }
 
 ul.menu {
-  width: 40%;
+  width: 85%;
   height: 100%;
   display: flex;
   justify-content: flex-start;
 }
 
-li {
-  vertical-align: middle;
+.menu-burger {
+	display: none;
+}
+
+.menu li a {
+	width: auto;
 }
 
 .menu li {
@@ -134,7 +138,7 @@ li {
   position: absolute;
   top: 5px;
   right: 0;
-  width: 150px;
+  width: 210px;
   text-align: center;
 	z-index: 9999;
 }
@@ -144,6 +148,7 @@ li {
   height: 50px;
   width: 50px;
 	object-fit: cover;
+	margin-right: -80px;
 }
 
 .currentUserInMenu {
@@ -156,6 +161,7 @@ li {
   display: block;
   padding: 7px;
   height: 35px;
+	width: 196px;
 }
 
 .menu li:hover,
@@ -192,8 +198,48 @@ li.currentUserInMenu:hover {
 	display: block;
 }
 
+@media all and (max-width: 787px) {
+	ul.menu {
+		flex-direction: column;
+		width: 200px;
+	}
+
+	.menu-burger {
+		display: block;
+		height: 60px;
+		width: 50px;
+		border: none;
+		background: transparent;
+	}
+
+	.menu-burger:focus {
+		outline: none;
+	}
+
+	.menu-icon {
+		width: 40px;
+		height: auto;
+		margin-top: 5px;
+		filter: invert(97%) sepia(6%) saturate(846%) hue-rotate(57deg) brightness(93%) contrast(87%);
+	}
+
+	.menu-option {
+		display: none;
+	}
+
+	.menu-burger:focus ~ .menu-option {
+		display: block;
+		background: rgb(61,134,46);
+	}
+
+	.menu-option:hover {
+		background: rgb(46,97,47) !important;
+	}
+
+}
+
 /* ================================================================
-MAIN
+LOGIN/SIGNUP
 ================================================================= */
 
 .authentication-wrapper {

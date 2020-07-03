@@ -9,16 +9,18 @@ html
     if (currentUser)
       header
         ul.menu
-          li 
+          button.menu-burger
+            img.menu-icon(src='/images/menu.svg')
+          li.menu-option 
             a(href='/') Timeline
-          li 
+          li.menu-option  
             a(href='/users') Find Friends
-          li 
+          li.menu-option  
             a(href='/users/' + currentUser._id + '/friend-requests') Friend Requests
             if (currentUser.friendRequests.length)
               span.connector : 
               span.noOfRequests #{currentUser.friendRequests.length}
-          li 
+          li.menu-option  
             a(href='/users/' + currentUser._id + '/friend-list') My Friends
         div.userPicture
           img.profilePicInMenu(src=currentUser.picture)
