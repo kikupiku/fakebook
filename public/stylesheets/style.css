@@ -48,6 +48,12 @@ textarea {
 	resize: none;
 }
 
+label,
+input,
+textarea  {
+	display: block;
+}
+
 /* ================================================================
 MAIN
 ================================================================= */
@@ -58,7 +64,24 @@ h1 {
 	font-size: 36px;
 	text-align: center;
 	margin-top: 15px;
-	margin-bottom: 15px;
+	margin-bottom: 70px;
+}
+
+h2 {
+	color: white;
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 30px;
+	text-align: center;
+	margin-top: 5px;
+	margin-bottom: 30px;
+	display: block;
+	vertical-align: middle;
+}
+
+h3 {
+	color: rgb(61,134,46);
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 26px;
 }
 
 a {
@@ -167,6 +190,129 @@ li.currentUserInMenu:hover {
 .userPicture:hover .dropdown-menu {
 	height: 70px;
 	display: block;
+}
+
+/* ================================================================
+MAIN
+================================================================= */
+
+.authentication-wrapper {
+	display: flex;
+	margin: 0 auto;
+	width: 80%;
+}
+
+.auth-form-container {
+	border: 2px solid green;
+	border-radius: 5px;
+	background: radial-gradient(rgb(167,210,155), rgb(61,134,46));
+	width: 40%;
+}
+
+.auth-middle {
+	text-align: center;
+	vertical-align: middle;
+	color: rgb(61,134,46);
+	font-family: 'Gloria Hallelujah', cursive;
+	font-size: 28px;
+}
+
+.or-container {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 20%;
+}
+
+.auth-label {
+	color: white;
+	font-family: 'Gloria Hallelujah', cursive;
+	margin: 10px 0 5px 20px;
+}
+
+.auth-form input {
+	margin: 0 auto;
+	width: 90%;
+	height: 25px;
+}
+
+.auth-form input:not([type='file']) {
+	border: 1px solid black;
+}
+
+.auth-form button {
+	display: block;
+	width: 80px;
+	margin: 0 auto;
+	background: white;
+	border-radius: 5px;
+	height: 30px;
+}
+
+.fb-link {
+	width: 100%;
+	display: block;
+}
+
+.fb-login {
+	display: block;
+	text-align: center;
+	font-family: 'Open Sans Condensed', sans-serif;
+	font-weight: bold;
+	color: white;
+	font-size: 20px;
+	height: 30px;
+	border-radius: 5px;
+	width: 80%;
+	text-align: center;
+	line-height: 1.5;
+	margin: 0 auto 30px auto;
+	background: #4267B2;
+}
+
+a.fb-login:hover {
+	text-decoration: underline;
+	border: 1px solid white;
+}
+
+.custom-file-input::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-file-input::before {
+  content: 'Select your avatar';
+  display: inline-block;
+  background: white;
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  text-shadow: 1px 1px #fff;
+  font-weight: 700;
+  font-size: 10pt;
+	width: 94%;
+	text-align: center;
+}
+.custom-file-input:hover::before {
+  border-color: black;
+}
+.custom-file-input:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+}
+
+@media all and (max-width: 787px) {
+	.authentication-wrapper {
+		flex-direction: column;
+		width: 100%;
+	}
+
+	.authentication-container {
+		width: 80%;
+		margin: 0 auto;
+	}
 }
 
 /* ===========================================================

@@ -29,6 +29,7 @@ block content
   br
     
   a(href='/users/' + user._id + '/gallery') #{user.firstName}'s Photo Gallery
+  a(href='/users/' + user._id + '/friend-list') #{user.firstName}'s Friends
     
   if (currentUser._id.toString() === user._id.toString())  
     form.add-post(id='createNewPost' method='POST' action='/posts' enctype='multipart/form-data')

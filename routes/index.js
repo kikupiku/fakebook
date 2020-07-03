@@ -65,5 +65,4 @@ router.get('/auth/facebook/callback', passport.authenticate('facebook', {
 module.exports = router;
 
 // TODO:
-// seeding
 // visualssssss

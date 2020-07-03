@@ -69,7 +69,7 @@ User.remove({})
       }
     });
   });
-});
+}).catch(err => console.log('we\'ve made it here!'));
 
 function makePosts() {
   for (let i = 0; i < 200; i++) {
@@ -154,7 +154,7 @@ function makeComments() {
           comments.push(commentRef._id);
           if (comments.length >= 300) {
             console.log('seeding successful');
-            throw new Error("done");
+            return Promise.reject('end');
           }
         })
       });

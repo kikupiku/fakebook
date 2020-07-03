@@ -475,14 +475,18 @@ exports.friend_requests_get = function (req, res, next) {
 };
 
 exports.friend_list_get = function (req, res, next) {
-  User.find({ '_id': { '$in': req.user.friends }})
-  .sort([['firstName', 'ascending']])
-  .exec(function (err, friends) {
-    if (err) {
-      return next(err);
-    }
+  User.findById(req.params.id)
+  .exec(function (err, user) {
 
-    res.render('myFriends', { title: 'My Friends', friends: friends, currentUser: req.user });
+    User.find({ '_id': { '$in': user.friends }})
+    .sort([['firstName', 'ascending']])
+    .exec(function (err, friends) {
+      if (err) {
+        return next(err);
+      }
+
+      res.render('myFriends', { title: 'My Friends', friends: friends, currentUser: req.user });
+    });
   });
 };
 

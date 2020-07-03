@@ -2,42 +2,46 @@ extends layout
 
 block content 
   
-  h1 Sign Up
-  form(id='getAccessFormFB' method='POST' action='/users' enctype='multipart/form-data')
-    label(for='firstName') First Name:
-    input#firstName(type='text', placeholder='Alex', name='firstName', required='true')
-    br
-    label(for='lastName') Last Name:
-    input#lastName(type='text', placeholder='Smith', name='lastName', required='true')
-    br
-    label(for='email') Email:
-    input#email(type='text', placeholder='address@example.com', name='email', required='true')
-    br
-    label(for='email') Password:
-    input#password(type='password', name='password', required='true')
-    br
-    label(htmlFor='pictureInput') Profile Image:
-    input(type='file' id='pictureInput' class='pictureInput' name='image')
-    br
-    button(type='submit' action='/users') Sign Up
+  h1= title.toUpperCase()
+  
+  div.authentication-wrapper
+    div.authentication-container.auth-form-container
+      h2 Sign Up
+      form.auth-form(id='getAccessFormFB' method='POST' action='/users' enctype='multipart/form-data')
+        label.auth-label(for='firstName') First Name:
+        input#firstName(type='text', placeholder='Alex', name='firstName', required='true')
+        label.auth-label(for='lastName') Last Name:
+        input#lastName(type='text', placeholder='Smith', name='lastName', required='true')
+        label.auth-label(for='email') Email:
+        input#email(type='text', placeholder='address@example.com', name='email', required='true')
+        label.auth-label(for='email') Password:
+        input#password(type='password', name='password', required='true')
+        label.auth-label(htmlFor='pictureInput') Profile Image:
+        input(type='file' id='pictureInput' class='pictureInput custom-file-input' name='image')
+        br
+        button(type='submit' action='/users') Sign Up
+        
+      br
+      div.fb-link
+        a.fb-login(href='/auth/facebook') Sign up with Facebook instead
     
-  br
-  <a href="/auth/facebook">Sign up with Facebook instead</a>
-  
-  h2 OR
-  
-  h1 Log In:
-  form(id='getAccessForm' action='/log-in' method='POST')
-    label.log-in-email(for='email') E-mail:
-    input(name='email' placeholder='example@mail.com' type='text')
-    br
-    label.log-in-password(for='password') Password:
-    input(name='password' type='password')
-    br
-    button(type='submit' action='/log-in') Log In
-  br
-  <a href="/auth/facebook">Login with Facebook instead</a>
+    div.authentication-container.or-container
+      p.auth-middle OR
+    
+    div.authentication-container.auth-form-container
+      h2 Log In:
+      form.auth-form(id='getAccessForm' action='/log-in' method='POST')
+        label.auth-label.log-in-email(for='email') E-mail:
+        input(name='email' placeholder='example@mail.com' type='text')
+        label.auth-label.log-in-password(for='password') Password:
+        input(name='password' type='password')
+        br
+        button(type='submit' action='/log-in') Log In
+      br
+      div.fb-link
+        a.fb-login(href='/auth/facebook') Login with Facebook instead
 
-  if (errors) 
-    for error in errors
-      p= error
+  div.error-container
+    if (errors) 
+      for error in errors
+        p= error
