@@ -3,21 +3,27 @@ extends layout
 block content
   h1= title
   
-  form.add-post(id='createNewPost' method='POST' action='/posts' enctype='multipart/form-data')
-    label(for='postContent') Write a Post:
-    br
-    textarea#postContent(type='text', name='postContent', required='true')
-    br
-    label(htmlFor='pictureInput') Add an Image:
-    input(type='file' id='pictureInput' class='pictureInput' name='image')
-    br
-    button(type='submit' formaction='/posts' method='POST') Add Post
+  div.new-post-container
+    form.add-post(id='createNewPost' method='POST' action='/posts' enctype='multipart/form-data')
+      label.post-label(for='postContent') Write a Post:
+      br
+      textarea#postContent(type='text', name='postContent', required='true')
+      br
+      div.buttons
+        input.custom-post-image(type='file' id='pictureInput' class='pictureInput' name='image')
+        button.main-btn(type='submit' formaction='/posts' method='POST') Add Post
     
   br
     
   div.post-list
     for post, index in postsOfFriends
       div.post-container
+        div.descr-container
+          img.smallProfilePic(src=post.author.picture)
+          a.author-link(href='/users/' + post.author._id) #{post.author.fullName}
+          span  posted #{post.createdAgo}:
+        if (post.postPicture !== '')
+          img.post-pic(src=post.postPicture)
         if (postToEdit)
           if (postToEdit._id.toString() == post._id.toString())
             form.edit-post(id='editPost' + post._id method='POST' action='/posts' + post._id + '/edit' enctype='multipart/form-data')
@@ -25,20 +31,15 @@ block content
               br
               textarea#postContent(type='text', name='postContent', required='true') #{post.postContent}
               br
-              label(htmlFor='pictureInput') Add or change the Image:
+              label.custom-post-image(htmlFor='pictureInput')
               input(type='file' id='pictureInput' class='pictureInput' name='image')
               br
-              button(type='submit' formaction='/posts/' + post._id + '/edit' method='POST') Update Post 
+              button.main-btn(type='submit' formaction='/posts/' + post._id + '/edit' method='POST') Update Post 
             form.cancel-edit(id='cancelEdit' method='POST' action='/')
               input(type='hidden' id='postToEditId' name='postToEditId' value=false)
               button(type='submit' formation='/' method='POST') Cancel
           else    
-            p= post.postContent
-            img.smallProfilePic(src=post.author.picture)
-            a(href='/users/' + post.author._id) #{post.author.fullName}
-            if (post.postPicture !== '')
-              img(src=post.postPicture)
-            p Posted #{post.createdAgo}
+            p.post-content #{post.postContent}
             form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
               input(type='hidden' id='postId' + index name='postId' value=post._id)
               input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
@@ -53,18 +54,14 @@ block content
                 span  likes
         else    
           if (currentUser._id.toString() == post.author._id)
-            form(id='determinePostEdit' method='POST' action='/')
-              input(type='hidden' id='postToEditId' name='postToEditId' value=post._id)
-              button(type='submit' formation='/' method='POST') Edit
-            form(id='deletePost' method='POST' action='/posts/' + post._id + '/delete')
-              input(type='hidden' id='postToDeleteId' name='postToDeleteId' value=post._id)
-              button(type='submit' formation='/posts/' + post._id + '/delete' method='POST') Delete Post
-          p= post.postContent
-          img.smallProfilePic(src=post.author.picture)
-          a(href='/users/' + post.author._id) #{post.author.fullName}
-          if (post.postPicture !== '')
-            img(src=post.postPicture)
-          p Posted #{post.createdAgo}
+            div.manage-posts-or-comments
+              form(id='determinePostEdit' method='POST' action='/')
+                input(type='hidden' id='postToEditId' name='postToEditId' value=post._id)
+                button.edit-btn-big(type='submit' formation='/' method='POST')
+              form(id='deletePost' method='POST' action='/posts/' + post._id + '/delete')
+                input(type='hidden' id='postToDeleteId' name='postToDeleteId' value=post._id)
+                button.delete-btn-big(type='submit' formation='/posts/' + post._id + '/delete' method='POST')
+          p.post-content.content #{post.postContent}
           form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
             input(type='hidden' id='postId' + index name='postId' value=post._id)
             input(type='hidden' id='postFan' + index name='postFan' value=currentUser._id)
@@ -81,16 +78,19 @@ block content
         br
           
         form.add-comment(method='POST' action='/comments' id='add-comment' + post._id + index)
-          label(for='commentContent') Write a Comment:
-          br
-          textarea#commentContent(type='text', name='commentContent', required='true')
-          input(type='hidden' name='commentedPostId' value=post._id)
-          br
-          button(type='submit' formaction='/comments' method='POST') Add Comment
-          
+          label.comment-label(for='commentContent') Write a Comment:
+          div.create-comment-container
+            textarea#commentContent(type='text', name='commentContent', required='true')
+            input(type='hidden' name='commentedPostId' value=post._id)
+            button.main-btn(type='submit' formaction='/comments' method='POST') Add Comment
+        
         for comment in commentsToPostsOfFriends
           if (comment.post._id.toString() == post._id)
-            div.commentContainer
+            div.comment-container
+              div.descr-container
+                img.smallerProfilePic(src=comment.commenter.picture)
+                a.author-link(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
+                span.time-descr commented #{comment.createdAgo}
               if (commentToEdit)
                 if (commentToEdit._id.toString() == comment._id.toString())
                   form.edit-comment(id='editComment' + comment._id method='POST' action='/comments' + comment._id + '/edit')
@@ -98,15 +98,12 @@ block content
                     br
                     textarea#commentContent(type='text', name='commentContent', required='true') #{comment.commentContent}
                     br
-                    button(type='submit' formaction='/comments/' + comment._id + '/edit' method='POST') Update Comment 
+                    button.main-btn(type='submit' formaction='/comments/' + comment._id + '/edit' method='POST') Update Comment 
                   form.cancel-edit(id='cancelEdit' method='POST' action='/')
                     input(type='hidden' id='commentToEditId' name='commentToEditId' value=false)
                     button(type='submit' formation='/' method='POST') Cancel
                 else    
                   p= comment.commentContent
-                  img.smallerProfilePic(src=comment.commenter.picture)
-                  a(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
-                  p Commented #{comment.createdAgo}
               else
                 if (currentUser._id.toString() == comment.commenter._id)
                   form(id='determineCommentEdit' method='POST' action='/')
@@ -115,8 +112,5 @@ block content
                   form(id='deleteComment' method='POST' action='/comments/' + comment._id + '/delete')
                     input(type='hidden' id='commentToDeleteId' name='commentToDeleteId' value=comment._id)
                     button(type='submit' formation='/comments/' + comment._id + '/delete' method='POST') Delete Comment
-                p= comment.commentContent
-                img.smallerProfilePic(src=comment.commenter.picture)
-                a(href='/users/' + comment.commenter._id)  #{comment.commenter.fullName}
-                p Commented #{comment.createdAgo}
+                p.comment-content.content #{comment.commentContent}
     

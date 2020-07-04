@@ -54,13 +54,24 @@ textarea  {
 	display: block;
 }
 
+:root {
+  --main-color: rgb(61,134,46);
+	--dark-color: rgb(46,97,47);
+	--main-font: 'Gloria Hallelujah', cursive;
+	--secondary-font: 'Open Sans Condensed', sans-serif;
+}
+
+span {
+	font-family: sans-serif;
+}
+
 /* ================================================================
 GENERAL AND LAYOUT
 ================================================================= */
 
 h1 {
-	color: rgb(61,134,46);
-	font-family: 'Gloria Hallelujah', cursive;
+	color: var(--main-color);
+	font-family: var(--main-font);
 	font-size: 36px;
 	text-align: center;
 	margin-top: 15px;
@@ -69,7 +80,7 @@ h1 {
 
 h2 {
 	color: white;
-	font-family: 'Gloria Hallelujah', cursive;
+	font-family: var(--main-font);
 	font-size: 30px;
 	text-align: center;
 	margin-top: 5px;
@@ -79,8 +90,8 @@ h2 {
 }
 
 h3 {
-	color: rgb(61,134,46);
-	font-family: 'Gloria Hallelujah', cursive;
+	color: var(--main-color);
+	font-family: var(--main-font);
 	font-size: 26px;
 }
 
@@ -93,11 +104,12 @@ header {
   position: sticky;
   top: 0;
   height: 60px;
-  background-color: rgb(61,134,46);
+  background-color: var(--main-color);
   color: white;
-  font-family: 'Gloria Hallelujah', cursive;
+  font-family: var(--main-font);
   font-weight: bold;
   font-size: 24px;
+	z-index: 999999;
 }
 
 ul.menu {
@@ -157,7 +169,7 @@ ul.menu {
 }
 
 .dropdown-menu li {
-  background-color: rgb(61,134,46);
+  background-color: var(--main-color);
   display: block;
   padding: 7px;
   height: 35px;
@@ -166,11 +178,11 @@ ul.menu {
 
 .menu li:hover,
 .dropdown-menu li:hover {
-  background-color: rgb(46,97,47);
+  background-color: var(--dark-color);
 }
 
 li.currentUserInMenu:hover {
-	background-color: rgb(61,134,46);
+	background-color: var(--main-color);
 }
 
 .logout:hover {
@@ -229,11 +241,11 @@ li.currentUserInMenu:hover {
 
 	.menu-burger:focus ~ .menu-option {
 		display: block;
-		background: rgb(61,134,46);
+		background: var(--main-color);
 	}
 
 	.menu-option:hover {
-		background: rgb(46,97,47) !important;
+		background: var(--dark-color) !important;
 	}
 
 }
@@ -249,17 +261,17 @@ LOGIN/SIGNUP
 }
 
 .auth-form-container {
-	border: 2px solid green;
+	border: 2px solid var(--main-color);
 	border-radius: 5px;
-	background: radial-gradient(rgb(167,210,155), rgb(61,134,46));
+	background: radial-gradient(rgb(167,210,155), var(--main-color));
 	width: 40%;
 }
 
 .auth-middle {
 	text-align: center;
 	vertical-align: middle;
-	color: rgb(61,134,46);
-	font-family: 'Gloria Hallelujah', cursive;
+	color: var(--main-color);
+	font-family: var(--main-font);
 	font-size: 28px;
 }
 
@@ -272,7 +284,7 @@ LOGIN/SIGNUP
 
 .auth-label {
 	color: white;
-	font-family: 'Gloria Hallelujah', cursive;
+	font-family: var(--main-font);
 	margin: 10px 0 5px 20px;
 }
 
@@ -303,7 +315,7 @@ LOGIN/SIGNUP
 .fb-login {
 	display: block;
 	text-align: center;
-	font-family: 'Open Sans Condensed', sans-serif;
+	font-family: var(--secondary-font);
 	font-weight: bold;
 	color: white;
 	font-size: 20px;
@@ -380,7 +392,7 @@ FIND FRIENDS
 }
 
 .friendContainer p {
-	color: rgb(68,106,53);
+	color: var(--dark-color);
 	text-align: center;
 	width: 100%;
 	display: block;
@@ -394,10 +406,136 @@ FIND FRIENDS
 	padding: 5px;
 }
 
+/* ===========================================================
+TIMELINE/PROFILE
+============================================================ */
+
+.new-post-container {
+	width: 80%;
+	margin: 0 auto;
+	max-width: 500px;
+}
+
+#postContent {
+	width: 100%;
+	height: 80px;
+}
+
+.buttons {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+
+.post-label {
+	font-family: var(--main-font);
+	color: var(--dark-color);
+	font-size: 20px;
+}
+
+.main-btn {
+	height: 50px;
+	background: var(--main-color);
+	color: white;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 16px;
+}
+
+
+.cancel-btn {
+	height: 50px;
+	background: rgb(185, 119, 115);
+	color: white;
+	border-radius: 5px;
+	font-weight: bold;
+	font-size: 16px;
+	position: absolute;
+	top: 25px;
+	right: 15px;
+}
+
+
+.custom-post-image::-webkit-file-upload-button {
+  visibility: hidden;
+}
+
+.custom-post-image:focus {
+	outline: none;
+}
+
+.custom-post-image::before {
+  content: 'Add an Image';
+  display: inline-block;
+  background: rgb(167,210,155);
+	font-family: sans-serif;
+	color: var(--dark-color);
+  border: 1px solid #999;
+  border-radius: 3px;
+  padding: 5px 8px;
+  outline: none;
+  white-space: nowrap;
+  -webkit-user-select: none;
+  cursor: pointer;
+  font-size: 16px;
+	width: 90%;
+	text-align: center;
+	line-height: 2.5;
+	height: 38px;
+}
+.custom-post-image:hover::before {
+  border-color: black;
+}
+.custom-post-image:active::before {
+  background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+	width: 90%;
+	height: auto;
+}
+
+.post-list {
+	width: 90%;
+	margin: 0 auto;
+	max-width: 780px;
+}
+
 .post-container {
 	margin-bottom: 20px;
-	border: 1px solid green;
-	background-color: rgb(173,210,181)
+	border: 1px solid var(--main-color);
+	background-color: rgb(173,210,181);
+	position: relative;
+	padding: 25px;
+	vertical-align: middle;
+}
+
+.like-btn {
+	background: radial-gradient(rgb(210,175,173), rgb(185, 119, 115));
+	border: 2px solid rgb(185, 119, 115);
+	border-radius: 5px;
+	height: 25px;
+	width: auto;
+	font-size: 18px;
+}
+
+.like-btn:hover {
+	background: rgb(185, 119, 115);
+}
+
+.descr-container {
+	display: flex;
+	margin-bottom: 15px;
+	align-items: center;
+}
+
+.descr-container * {
+	margin-right: 5px;
+}
+
+.time-descr {
+	font-size: 14px;
+}
+
+.user-pic-name {
+	display: inline-block;
 }
 
 .smallProfilePic {
@@ -406,6 +544,7 @@ FIND FRIENDS
 	border-radius: 50%;
 	object-fit: cover;
 	z-index: 99;
+	border: 1px solid var(--dark-color);
 }
 
 .smallerProfilePic {
@@ -415,6 +554,119 @@ FIND FRIENDS
 	object-fit: cover;
 }
 
-.commentContainer {
-	border: 1px solid red;
+.post-pic {
+	border: 1px solid var(--dark-color);
+	width: 75%;
+	height: auto;
+	margin: 0 auto;
+	display: block;
+	margin-bottom: 15px;
+}
+
+.post-content {
+	margin: 0 auto 30px auto;
+}
+
+.content {
+	font-family: sans-serif;
+	width: 90%;
+	display: block;
+	text-align: justify;
+}
+
+.comment-container {
+	border: 1px dashed var(--dark-color);
+	padding: 5px;
+	margin-bottom: 3px;
+	background: rgb(194,227,201);
+	position: relative;
+}
+
+.comment-content {
+	margin-left: 22px;
+}
+
+.author-link {
+	color: var(--dark-color);
+	font-family: sans-serif;
+	text-decoration: underline;
+}
+
+.author-link:hover {
+	text-decoration: none;
+}
+
+.comment-label {
+	font-family: var(--main-font);
+	font-size: 20px;
+	color: var(--dark-color);
+	margin-bottom: 5px;
+}
+
+.create-comment-container {
+	display: flex;
+	justify-content: space-between;
+}
+
+#commentContent {
+	width: 80%;
+	height: 45px;
+	margin-bottom: 30px;
+}
+
+.manage-posts-or-comments {
+	display: flex;
+	position: absolute;
+	top: 25px;
+	right: 15px;
+}
+
+.edit-btn {
+	background-image: url('/images/edit.svg');
+	background-color: transparent;
+	background-size: 100% 100%;
+	border: none;
+	margin-right: 5px;
+	margin-top: -3px;
+}
+
+.edit-btn:hover,
+.delete-btn:hover {
+	cursor: pointer;
+}
+
+.edit-btn:focus,
+.delete-btn:focus {
+	outline: none;
+}
+
+.delete-btn {
+	background-image: url('/images/delete.png');
+	background-color: transparent;
+	background-size: 100% 100%;
+	border: none;
+	margin-right: 5px;
+}
+
+.edition-buttons {
+	display: flex;
+	justify-content: space-between;
+}
+
+.edit-big {
+	height: 30px;
+	width: 30px;
+}
+
+.edit-small {
+
+}
+
+.delete-big {
+	height: 25px;
+	width: 25px;
+}
+
+.delete-small {
+
 }

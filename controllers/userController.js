@@ -385,6 +385,7 @@ exports.user_profile_get = function (req, res, next) {
     },
     postsOfUser: function (callback) {
       Post.find({ 'author': req.params.id })
+      .populate('author')
       .sort('-createdAt')
       .exec(callback);
     },
@@ -410,6 +411,7 @@ exports.user_profilePOST = function (req, res, next) {
     },
     postsOfUser: function (callback) {
       Post.find({ 'author': req.params.id })
+      .populate('author')
       .sort('-createdAt')
       .exec(callback);
     },
