@@ -27,17 +27,15 @@ block content
         if (postToEdit)
           if (postToEdit._id.toString() == post._id.toString())
             form.edit-post(id='editPost' + post._id method='POST' action='/posts' + post._id + '/edit' enctype='multipart/form-data')
-              label(for='postContent') Edit the Post:
-              br
+              label.post-label(for='postContent') Edit the Post:
               textarea#postContent(type='text', name='postContent', required='true') #{post.postContent}
               br
-              label.custom-post-image(htmlFor='pictureInput')
-              input(type='file' id='pictureInput' class='pictureInput' name='image')
-              br
-              button.main-btn(type='submit' formaction='/posts/' + post._id + '/edit' method='POST') Update Post 
+              div.edition-buttons
+                input.custom-post-image(type='file' id='pictureInput' class='pictureInput' name='image')
+                button.main-btn(type='submit' formaction='/posts/' + post._id + '/edit' method='POST') Update Post 
             form.cancel-edit(id='cancelEdit' method='POST' action='/')
               input(type='hidden' id='postToEditId' name='postToEditId' value=false)
-              button(type='submit' formation='/' method='POST') Cancel
+              button.cancel-btn.cancel-big(type='submit' formation='/' method='POST') Cancel
           else    
             p.post-content #{post.postContent}
             form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
@@ -54,13 +52,13 @@ block content
                 span  likes
         else    
           if (currentUser._id.toString() == post.author._id)
-            div.manage-posts-or-comments
+            div.manage-posts
               form(id='determinePostEdit' method='POST' action='/')
                 input(type='hidden' id='postToEditId' name='postToEditId' value=post._id)
-                button.edit-btn-big(type='submit' formation='/' method='POST')
+                button.edit-btn.edit-big(type='submit' formation='/' method='POST')
               form(id='deletePost' method='POST' action='/posts/' + post._id + '/delete')
                 input(type='hidden' id='postToDeleteId' name='postToDeleteId' value=post._id)
-                button.delete-btn-big(type='submit' formation='/posts/' + post._id + '/delete' method='POST')
+                button.delete-btn.delete-big(type='submit' formation='/posts/' + post._id + '/delete' method='POST')
           p.post-content.content #{post.postContent}
           form.add-like(id='likeOnPost' + index method='POST' action='/posts/' + post._id)
             input(type='hidden' id='postId' + index name='postId' value=post._id)
@@ -94,23 +92,22 @@ block content
               if (commentToEdit)
                 if (commentToEdit._id.toString() == comment._id.toString())
                   form.edit-comment(id='editComment' + comment._id method='POST' action='/comments' + comment._id + '/edit')
-                    label(for='postContent') Edit your Comment:
-                    br
+                    label.comment-label(for='postContent') Edit your Comment:
                     textarea#commentContent(type='text', name='commentContent', required='true') #{comment.commentContent}
-                    br
                     button.main-btn(type='submit' formaction='/comments/' + comment._id + '/edit' method='POST') Update Comment 
                   form.cancel-edit(id='cancelEdit' method='POST' action='/')
                     input(type='hidden' id='commentToEditId' name='commentToEditId' value=false)
-                    button(type='submit' formation='/' method='POST') Cancel
+                    button.cancel-btn.cancel-small(type='submit' formation='/' method='POST') Cancel
                 else    
                   p= comment.commentContent
               else
                 if (currentUser._id.toString() == comment.commenter._id)
-                  form(id='determineCommentEdit' method='POST' action='/')
-                    input(type='hidden' id='commentToEditId' name='commentToEditId' value=comment._id)
-                    button(type='submit' formation='/' method='POST') Edit Comment
-                  form(id='deleteComment' method='POST' action='/comments/' + comment._id + '/delete')
-                    input(type='hidden' id='commentToDeleteId' name='commentToDeleteId' value=comment._id)
-                    button(type='submit' formation='/comments/' + comment._id + '/delete' method='POST') Delete Comment
+                  div.manage-comments
+                    form(id='determineCommentEdit' method='POST' action='/')
+                      input(type='hidden' id='commentToEditId' name='commentToEditId' value=comment._id)
+                      button.edit-btn.edit-small(type='submit' formation='/' method='POST')
+                    form(id='deleteComment' method='POST' action='/comments/' + comment._id + '/delete')
+                      input(type='hidden' id='commentToDeleteId' name='commentToDeleteId' value=comment._id)
+                      button.delete-btn.delete-small(type='submit' formation='/comments/' + comment._id + '/delete' method='POST')
                 p.comment-content.content #{comment.commentContent}
     

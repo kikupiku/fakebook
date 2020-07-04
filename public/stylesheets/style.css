@@ -46,6 +46,7 @@ q:before, q:after {
 
 textarea {
 	resize: none;
+	padding: 3px;
 }
 
 label,
@@ -63,6 +64,10 @@ textarea  {
 
 span {
 	font-family: sans-serif;
+}
+
+button:hover {
+	cursor: pointer;
 }
 
 /* ================================================================
@@ -265,6 +270,8 @@ LOGIN/SIGNUP
 	border-radius: 5px;
 	background: radial-gradient(rgb(167,210,155), var(--main-color));
 	width: 40%;
+	position: relative;
+	padding-top: 25px;
 }
 
 .auth-middle {
@@ -273,6 +280,8 @@ LOGIN/SIGNUP
 	color: var(--main-color);
 	font-family: var(--main-font);
 	font-size: 28px;
+	padding-top: 15px;
+	padding-bottom: 15px;
 }
 
 .or-container {
@@ -301,15 +310,18 @@ LOGIN/SIGNUP
 .auth-form button {
 	display: block;
 	width: 80px;
-	margin: 0 auto;
-	background: white;
+	margin: 0 auto 100px auto;
+	background: var(--main-color);
 	border-radius: 5px;
-	height: 30px;
+	height: 60px;
+	border: 3px solid var(--dark-color);
 }
 
 .fb-link {
 	width: 100%;
 	display: block;
+	position: absolute;
+	bottom: 0;
 }
 
 .fb-login {
@@ -444,17 +456,27 @@ TIMELINE/PROFILE
 
 
 .cancel-btn {
-	height: 50px;
+
 	background: rgb(185, 119, 115);
 	color: white;
 	border-radius: 5px;
 	font-weight: bold;
 	font-size: 16px;
 	position: absolute;
-	top: 25px;
-	right: 15px;
+
 }
 
+.cancel-big {
+	top: 25px;
+	right: 15px;
+	height: 50px;
+}
+
+.cancel-small {
+	top: 8px;
+	right: 6px;
+	height: 40px;
+}
 
 .custom-post-image::-webkit-file-upload-button {
   visibility: hidden;
@@ -614,11 +636,18 @@ TIMELINE/PROFILE
 	margin-bottom: 30px;
 }
 
-.manage-posts-or-comments {
+.manage-posts {
 	display: flex;
 	position: absolute;
 	top: 25px;
 	right: 15px;
+}
+
+.manage-comments {
+	display: flex;
+	position: absolute;
+	top: 7px;
+	right: 6px;
 }
 
 .edit-btn {
@@ -646,6 +675,7 @@ TIMELINE/PROFILE
 	background-size: 100% 100%;
 	border: none;
 	margin-right: 5px;
+	filter: invert(55%) sepia(20%) saturate(873%) hue-rotate(200deg) brightness(92%) contrast(80%);
 }
 
 .edition-buttons {
@@ -659,7 +689,8 @@ TIMELINE/PROFILE
 }
 
 .edit-small {
-
+	height: 20px;
+	width: 20px;
 }
 
 .delete-big {
@@ -668,5 +699,6 @@ TIMELINE/PROFILE
 }
 
 .delete-small {
-
+	height: 15px;
+	width: 15px;
 }
