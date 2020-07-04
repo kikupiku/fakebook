@@ -428,6 +428,12 @@ TIMELINE/PROFILE
 	max-width: 500px;
 }
 
+.new-post-container-in-profile {
+	margin: 0 auto;
+	max-width: 500px;
+	width: 50%;
+}
+
 #postContent {
 	width: 100%;
 	height: 80px;
@@ -701,4 +707,78 @@ TIMELINE/PROFILE
 .delete-small {
 	height: 15px;
 	width: 15px;
+}
+
+.personal-info-container {
+	display: flex;
+	justify-content: center;
+	width: 70%;
+	margin: 0 auto;
+	align-items: center;
+	height: 400px;
+}
+
+.picture-request-container {
+	width: 32%;
+}
+
+.user-profile-pic {
+	border-radius: 50%;
+	object-fit: cover;
+	height: 150px;
+	width: 150px;
+	display: block;
+	clear: both;
+	margin: 0 auto 15px auto;
+}
+
+.user-link-container {
+	width: auto;
+	margin: 0 auto;
+	display: flex;
+	justify-content: space-around;
+}
+
+.user-link {
+	border: 1px solid var(--dark-color);
+	background: var(--dark-color);
+	padding: 5px;
+	border-radius: 5px;
+	color: white;
+	font-family: var(--secondary-font);
+	font-weight: bold;
+	margin: 3px;
+	height: 40px;
+	line-height: 2.5;
+	text-align: center;
+}
+
+.user-link1 {
+	min-width: 130px;
+}
+
+.user-link2 {
+	min-width: 100px;
+}
+
+.manage-request {
+	width: 100%;
+	text-align: center;
+	font-size: 24px;
+	font-family: var(--secondary-font);
+	margin-top: -30px;
+}
+
+.req-btn {
+	border-radius: 5px;
+	font-family: var(--secondary-font);
+	font-size: 18px;
+}
+
+.positive-btn {
+	background: rgb(194,227,201);
+}
+
+.negative-btn {
+	background: rgb(210,175,173);
 }

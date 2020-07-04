@@ -2,45 +2,48 @@ extends layout
 
 block content 
   h1= title
-  img(src=user.picture)
-    
-  if (currentUser.friendRequests.find(request => request == user._id))
-    p Respond to request
-    form(id='requestResponse' + index method='POST')
-      input(type='hidden' value=user name='potentialFriend')
-      button(type='submit' formaction='/request-accept' method='POST') Accept
-      button(type='submit' formaction='/request-decline' method='POST') Decline
-  else if (user.friendRequests.find(request => request == currentUser._id))
-    p Request pending
-    form(id='cancelRequest' + index method='POST')
-      input(type='hidden' value=user name='potentialFriend')
-      button(type='submit' formaction='/request-cancel' method='POST') Cancel Request
-  else if (currentUser.friends.includes(user._id))
-    p You are friends
-    form(id='removeFriend' + index method='POST')
-      input(type='hidden' value=user._id name='soonExFriend')
-      button(type='submit' formaction='/remove-friend' method='POST') Remove from Friends
-  else if (currentUser._id.toString() !== user._id.toString())
-    form(id='requestFriendship' + index action='/request-friendship' method='POST')
-      input(type='hidden' value=user name='potentialFriend')
-      button(type='submit' action='/requestFriendship') Add Friend
+  div.manage-request
+    if (currentUser.friendRequests.find(request => request == user._id))
+      p Respond to request
+      form(id='requestResponse' + index method='POST')
+        input(type='hidden' value=user name='potentialFriend')
+        button.positive-btn.req-btn(type='submit' formaction='/request-accept' method='POST') Accept
+        button.negative-btn.req-btn(type='submit' formaction='/request-decline' method='POST') Decline
+    else if (user.friendRequests.find(request => request == currentUser._id))
+      p Request pending
+      form(id='cancelRequest' + index method='POST')
+        input(type='hidden' value=user name='potentialFriend')
+        button.negative-btn.req-btn(type='submit' formaction='/request-cancel' method='POST') Cancel Request
+    else if (currentUser.friends.includes(user._id))
+      p You are friends
+      form(id='removeFriend' + index method='POST')
+        input(type='hidden' value=user._id name='soonExFriend')
+        button.negative-btn.req-btn(type='submit' formaction='/remove-friend' method='POST') Remove from Friends
+    else if (currentUser._id.toString() !== user._id.toString())
+      form(id='requestFriendship' + index action='/request-friendship' method='POST')
+        input(type='hidden' value=user name='potentialFriend')
+        button.positive-btn.req-btn(type='submit' action='/requestFriendship') Add Friend
       
-  br
+  div.personal-info-container
+    div.picture-request-container
+      img.user-profile-pic(src=user.picture)
+
+      div.user-link-container
+        a.user-link.user-link1(href='/users/' + user._id + '/gallery') #{user.firstName}'s Photo Gallery
+        a.user-link.user-link2(href='/users/' + user._id + '/friend-list') #{user.firstName}'s Friends
     
-  a(href='/users/' + user._id + '/gallery') #{user.firstName}'s Photo Gallery
-  a(href='/users/' + user._id + '/friend-list') #{user.firstName}'s Friends
-    
-  if (currentUser._id.toString() === user._id.toString())  
-    
-    div.new-post-container
-      form.add-post(id='createNewPost' method='POST' action='/posts' enctype='multipart/form-data')
-        label.post-label(for='postContent') Write a Post:
-        br
-        textarea#postContent(type='text', name='postContent', required='true')
-        br
-        div.buttons
-          input.custom-post-image(type='file' id='pictureInput' class='pictureInput' name='image')
-          button.main-btn(type='submit' formaction='/posts' method='POST') Add Post
+    if (currentUser._id.toString() === user._id.toString())  
+      
+      div.new-post-container-in-profile
+        form.add-post(id='createNewPost' method='POST' action='/posts' enctype='multipart/form-data')
+          br
+          label.post-label(for='postContent') Write a Post:
+          br
+          textarea#postContent(type='text', name='postContent', required='true')
+          br
+          div.buttons
+            input.custom-post-image(type='file' id='pictureInput' class='pictureInput' name='image')
+            button.main-btn(type='submit' formaction='/posts' method='POST') Add Post
     
   br
   
