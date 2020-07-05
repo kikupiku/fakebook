@@ -4,14 +4,14 @@ block content
   
   h1= title
   
-  div.potentialFriends
+  div.potential-friends
 
     for potentialFriend, index in potentialFriends
-      div.friendContainer
+      div.friend-container
         p #{potentialFriend.fullName}
         img(src=potentialFriend.picture)
         p Respond to request
         form(id='requestResponse' + index method='POST')
           input(type='hidden' value=potentialFriend name='potentialFriend')
-          button(type='submit' formaction='/request-accept' method='POST') Accept
-          button(type='submit' formaction='/request-decline' method='POST') Decline
+          button.positive-btn(type='submit' formaction='/request-accept' method='POST') Accept
+          button.negative-btn(type='submit' formaction='/request-decline' method='POST') Decline

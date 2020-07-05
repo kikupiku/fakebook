@@ -56,8 +56,11 @@ textarea  {
 }
 
 :root {
+	--light-main-color: rgb(167,210,155);
   --main-color: rgb(61,134,46);
 	--dark-color: rgb(46,97,47);
+	--dark-red: rgb(185, 119, 115);
+	--light-red: rgb(210,175,173);
 	--main-font: 'Gloria Hallelujah', cursive;
 	--secondary-font: 'Open Sans Condensed', sans-serif;
 }
@@ -268,7 +271,7 @@ LOGIN/SIGNUP
 .auth-form-container {
 	border: 2px solid var(--main-color);
 	border-radius: 5px;
-	background: radial-gradient(rgb(167,210,155), var(--main-color));
+	background: radial-gradient(var(--light-main-color), var(--main-color));
 	width: 40%;
 	position: relative;
 	padding-top: 25px;
@@ -389,31 +392,44 @@ a.fb-login:hover {
 FIND FRIENDS
 ============================================================ */
 
-.myFriends,
-.potentialFriends {
+.my-friends,
+.potential-friends {
 	display: flex;
+	flex-wrap: wrap;
 	height: auto;
 	width: 100%;
 }
 
-.friendContainer {
+.friend-container {
 	height: 24vh;
 	width: 11vw;
-	margin-left: 15px;
-	margin-bottom: 15px;
+	margin: 0 auto 50px auto;
+	min-width: 150px;
+	text-align: center;
 }
 
-.friendContainer p {
+.friend-container p {
 	color: var(--dark-color);
 	text-align: center;
 	width: 100%;
 	display: block;
 	text-transform: uppercase;
+	font-family: sans-serif;
 }
 
-.friendContainer img {
-	height: 10vw;
-	width: 10vw;
+.friend-container a {
+	font-family: var(--secondary-font);
+	color: var(--dark-color);
+	font-size: 24px;
+}
+
+.friend-container a:hover {
+	text-decoration: underline;
+}
+
+.friend-container img {
+	height: 130px;
+	width: 130px;
 	border-radius: 50%;
 	padding: 5px;
 }
@@ -463,7 +479,7 @@ TIMELINE/PROFILE
 
 .cancel-btn {
 
-	background: rgb(185, 119, 115);
+	background: var(--dark-red);
 	color: white;
 	border-radius: 5px;
 	font-weight: bold;
@@ -495,7 +511,7 @@ TIMELINE/PROFILE
 .custom-post-image::before {
   content: 'Add an Image';
   display: inline-block;
-  background: rgb(167,210,155);
+  background: var(--light-main-color);
 	font-family: sans-serif;
 	color: var(--dark-color);
   border: 1px solid #999;
@@ -529,15 +545,15 @@ TIMELINE/PROFILE
 .post-container {
 	margin-bottom: 20px;
 	border: 1px solid var(--main-color);
-	background-color: rgb(173,210,181);
+	background-color: var(--light-main-color);
 	position: relative;
 	padding: 25px;
 	vertical-align: middle;
 }
 
 .like-btn {
-	background: radial-gradient(rgb(210,175,173), rgb(185, 119, 115));
-	border: 2px solid rgb(185, 119, 115);
+	background: radial-gradient(var(--light-red), var(--dark-red));
+	border: 2px solid var(--dark-red);
 	border-radius: 5px;
 	height: 25px;
 	width: auto;
@@ -545,7 +561,7 @@ TIMELINE/PROFILE
 }
 
 .like-btn:hover {
-	background: rgb(185, 119, 115);
+	background: var(--dark-red);
 }
 
 .descr-container {
@@ -606,7 +622,7 @@ TIMELINE/PROFILE
 	border: 1px dashed var(--dark-color);
 	padding: 5px;
 	margin-bottom: 3px;
-	background: rgb(194,227,201);
+	background: var(--light-main-color);
 	position: relative;
 }
 
@@ -776,9 +792,141 @@ TIMELINE/PROFILE
 }
 
 .positive-btn {
-	background: rgb(194,227,201);
+	background: var(--light-main-color);
+	border: 1px solid silver;
 }
 
 .negative-btn {
-	background: rgb(210,175,173);
+	background: var(--light-red);
+	border: 1px solid silver;
+}
+
+/* ========================================
+MANAGE/DELETE
+======================================== */
+
+.info-container {
+	background: radial-gradient(var(--light-main-color), var(--main-color));
+	width: 50%;
+	margin: 0 auto;
+	border-radius: 5px;
+	border: 1px solid var(--dark-color);
+	padding: 20px;
+	min-width: 440px;
+}
+
+.manage-label {
+	font-family: var(--main-font);
+	color: white;
+	font-size: 24px;
+	margin-bottom: 25px;
+	text-align: center;
+}
+
+.info-container label {
+	margin-left: 10%;
+	font-family: var(--main-font);
+	color: var(--dark-color);
+	font-size: 20px;
+	margin-bottom: 5px;
+}
+
+.info-container input {
+	padding: 5px;
+	width: 80%;
+	margin: 0 auto;
+}
+
+.info-container button {
+	width: 180px;
+	margin: 0 auto;
+	text-align: center;
+	display: block;
+	padding: 5px;
+	background: white;
+	border-radius: 5px;
+	border: none;
+	font-family: var(--secondary-font);
+	font-size: 18px;
+}
+
+.info-container button:hover {
+	background: radial-gradient(rgb(214,213,213), rgb(172,170,170));
+	border: 1px solid grey;
+}
+
+.manage-file-input::before {
+	width: 100%;
+}
+
+.delete-link {
+	color: var(--dark-red);
+	font-family: var(--secondary-font);
+	font-size: 24px;
+	text-align: center;
+	display: block;
+	border-radius: 5px;
+	border: 1px solid var(--dark-red);
+	width: 160px;
+	margin: 0 auto;
+	padding: 5px;
+}
+
+.delete-link:hover {
+	background: var(--light-red);
+}
+
+.disclaimer {
+	font-family: var(--secondary-font);
+	font-size: 16px;
+	margin-left: 10%;
+}
+
+.cancel-delete-account {
+	width: 200px;
+	height: 100px;
+	text-align: center;
+	margin: 0 auto;
+	display: block;
+	background: var(--dark-red);
+	color: white;
+	font-family: var(--secondary-font);
+	font-weight: bold;
+	font-size: 32px;
+	border-radius: 5px;
+	line-height: 3;
+}
+
+.cancel-delete-account:hover {
+	background: rgb(187,60,13);
+	line-height: 2.5;
+	font-size: 40px;
+	transition-duration: 0.2s;
+	transition-property: font-size, background, line-height;
+	transition-timing-function: ease-in;
+}
+
+.delete-account-button {
+	text-align: center;
+	margin: 0 auto 30px auto;
+	display: block;
+	width: 100px;
+	height: 50px;
+	font-family: var(--secondary-font);
+	border-radius: 5px;
+	background: white;
+	color: rgb(187,60,13);
+	border: 1px solid rgb(187,60,13);
+	font-size: 20px;
+}
+
+.delete-account-button:hover {
+	font-size: 14px;
+	color: rgb(201,125,97);
+	border: 1px solid rgb(201,125,97);
+	width: 70px;
+	height: 40px;
+	transition-duration: 0.2s;
+	transition-property: all;
+	transition-timing-function: ease-in;
 }

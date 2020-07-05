@@ -7,5 +7,5 @@ block content
   
   form(id='deleteUser' method='POST' action='/users/' + currentUser._id + '/delete')
     input(type='hidden' name='userToDeleteId' value=currentUser._id)
-    button(type='submit' formation='/users/' + currentUser._id + '/delete' method='POST') Yes, delete!
-  a(href='/users/' + currentUser._id + '/manage') No, cancel!
+    button.delete-account-button(type='submit' formation='/users/' + currentUser._id + '/delete' method='POST') Yes, delete!
+  a.cancel-delete-account(href='/users/' + currentUser._id + '/manage') No, cancel!

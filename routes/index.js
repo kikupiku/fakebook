@@ -66,3 +66,4 @@ module.exports = router;
 
 // TODO:
 // visualssssss
+//     error messages in sign up

@@ -8,7 +8,7 @@ block content
       p= error.msg
   
   div.info-container
-    p Personal Information
+    p.manage-label Personal Information
     form(id='editPersonalInfo' method='POST' action='/users' + currentUser._id + '/update-personal-info' enctype='multipart/form-data')
       input(type='hidden' name='userToEditId' value=currentUser._id)
       label(for='editFirstName') * First Name
@@ -21,30 +21,27 @@ block content
         label(for='editEmail') * Email
         input(type='text' name='email' value=currentUser.email)
       br
-      label(htmlFor='pictureInput') Change Your Profile Picture:
-      input(type='file' id='pictureInput' class='pictureInput' name='image')
+      input.custom-file-input.manage-file-input(type='file' id='pictureInput' class='pictureInput' name='image')
       br
       button(type='submit' formaction='/users/' + currentUser._id + '/update-personal-info' method='POST') Save Changes
-      p * - fields cannot be left blank
+      p.disclaimer * - fields cannot be left blank
     
   br
     
   if (currentUser.email)  
     div.info-container
-      p Change Your Password
+      p.manage-label Change Your Password
       form(id='editPassword' method='POST' action='/users/' + currentUser._id + '/update-password')
         input(type='hidden' name='userToEditId' value=currentUser._id)
         label(for='newPassword') New Password
         input(id='newPassword' type='password' name='newPassword')
         br
-        label(for='confirmNewPassword') New Password
+        label(for='confirmNewPassword') Confirm New Password
         input(id='confirmNewPassword' type='password' name='confirmNewPassword')
         br
         button(type='submit' formaction='/users/' + currentUser._id + '/update-password' method='POST') Change Password
     br
     if (passwordChangeMsg)
       p= passwordChangeMsg
-      
-  br
     
-  a(href='/users/' + currentUser._id + '/delete') Delete Your Account
+  a.delete-link(href='/users/' + currentUser._id + '/delete') Delete Your Account

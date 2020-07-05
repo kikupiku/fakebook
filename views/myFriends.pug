@@ -4,9 +4,9 @@ block content
 
   h1= title
   
-  div.myFriends
+  div.my-friends
     for friend in friends
-      div.friendContainer
+      div.friend-container
         a(href='/users/' + friend._id)= friend.fullName
         img(src=friend.picture)
 
