@@ -81,19 +81,19 @@ h1 {
 	color: var(--main-color);
 	font-family: var(--main-font);
 	font-size: 36px;
-	text-align: center;
-	margin-top: 15px;
 	margin-bottom: 70px;
+	margin-top: 15px;
+	text-align: center;
 }
 
 h2 {
 	color: white;
+	display: block;
 	font-family: var(--main-font);
 	font-size: 30px;
-	text-align: center;
-	margin-top: 5px;
 	margin-bottom: 30px;
-	display: block;
+	margin-top: 5px;
+	text-align: center;
 	vertical-align: middle;
 }
 
@@ -108,23 +108,24 @@ a {
 }
 
 header {
-  width: 100%;
-  position: sticky;
-  top: 0;
-  height: 60px;
-  background-color: var(--main-color);
-  color: white;
+	background-color: var(--main-color);
+	color: white;
   font-family: var(--main-font);
+	font-size: 24px;
   font-weight: bold;
-  font-size: 24px;
+	height: 60px;
+	position: -webkit-sticky;
+	position: sticky;
+	top: 0;
+	width: 100%;
 	z-index: 999999;
 }
 
 ul.menu {
-  width: 85%;
+	display: flex;
   height: 100%;
-  display: flex;
   justify-content: flex-start;
+	width: 85%;
 }
 
 .menu-burger {
@@ -156,19 +157,20 @@ ul.menu {
 
 .userPicture {
   position: absolute;
-  top: 5px;
   right: 0;
-  width: 210px;
   text-align: center;
+	top: 5px;
+	width: 210px;
 	z-index: 9999;
 }
 
 .profilePicInMenu {
   border-radius: 50%;
   height: 50px;
-  width: 50px;
-	object-fit: cover;
 	margin-right: -80px;
+	-o-object-fit: cover;
+	   object-fit: cover;
+	width: 50px;
 }
 
 .currentUserInMenu {
@@ -179,8 +181,8 @@ ul.menu {
 .dropdown-menu li {
   background-color: var(--main-color);
   display: block;
-  padding: 7px;
   height: 35px;
+	padding: 7px;
 	width: 196px;
 }
 
@@ -214,8 +216,8 @@ li.currentUserInMenu:hover {
 }
 
 .userPicture:hover .dropdown-menu {
-	height: 70px;
 	display: block;
+	height: 70px;
 }
 
 @media all and (max-width: 787px) {
@@ -225,11 +227,11 @@ li.currentUserInMenu:hover {
 	}
 
 	.menu-burger {
+		background: transparent;
+		border: none;
 		display: block;
 		height: 60px;
 		width: 50px;
-		border: none;
-		background: transparent;
 	}
 
 	.menu-burger:focus {
@@ -237,10 +239,11 @@ li.currentUserInMenu:hover {
 	}
 
 	.menu-icon {
-		width: 40px;
+		-webkit-filter: invert(97%) sepia(6%) saturate(846%) hue-rotate(57deg) brightness(93%) contrast(87%);
+		        filter: invert(97%) sepia(6%) saturate(846%) hue-rotate(57deg) brightness(93%) contrast(87%);
 		height: auto;
 		margin-top: 5px;
-		filter: invert(97%) sepia(6%) saturate(846%) hue-rotate(57deg) brightness(93%) contrast(87%);
+		width: 40px;
 	}
 
 	.menu-option {
@@ -248,8 +251,8 @@ li.currentUserInMenu:hover {
 	}
 
 	.menu-burger:focus ~ .menu-option {
-		display: block;
 		background: var(--main-color);
+		display: block;
 	}
 
 	.menu-option:hover {
@@ -269,27 +272,27 @@ LOGIN/SIGNUP
 }
 
 .auth-form-container {
+	background: radial-gradient(var(--light-main-color), var(--main-color));
 	border: 2px solid var(--main-color);
 	border-radius: 5px;
-	background: radial-gradient(var(--light-main-color), var(--main-color));
-	width: 40%;
-	position: relative;
 	padding-top: 25px;
+	position: relative;
+	width: 40%;
 }
 
 .auth-middle {
-	text-align: center;
-	vertical-align: middle;
 	color: var(--main-color);
 	font-family: var(--main-font);
 	font-size: 28px;
-	padding-top: 15px;
 	padding-bottom: 15px;
+	padding-top: 15px;
+	text-align: center;
+	vertical-align: middle;
 }
 
 .or-container {
-	display: flex;
 	align-items: center;
+	display: flex;
 	justify-content: center;
 	width: 20%;
 }
@@ -301,9 +304,9 @@ LOGIN/SIGNUP
 }
 
 .auth-form input {
+	height: 25px;
 	margin: 0 auto;
 	width: 90%;
-	height: 25px;
 }
 
 .auth-form input:not([type='file']) {
@@ -311,45 +314,44 @@ LOGIN/SIGNUP
 }
 
 .auth-form button {
-	display: block;
-	width: 80px;
-	margin: 0 auto 100px auto;
 	background: var(--main-color);
-	border-radius: 5px;
-	height: 60px;
 	border: 3px solid var(--dark-color);
+	border-radius: 5px;
 	color: white;
+	display: block;
 	font-family: var(--secondary-font);
 	font-size: 24px;
 	font-weight: bold;
+	height: 60px;
+	margin: 0 auto 100px auto;
+	width: 80px;
 }
 
 .fb-link {
-	width: 100%;
+	bottom: 0;
 	display: block;
 	position: absolute;
-	bottom: 0;
+	width: 100%;
 }
 
 .fb-login {
-	display: block;
-	text-align: center;
-	font-family: var(--secondary-font);
-	font-weight: bold;
-	color: white;
-	font-size: 20px;
-	height: 30px;
+	background: #4267B2;
 	border-radius: 5px;
-	width: 80%;
-	text-align: center;
+	color: white;
+	display: block;
+	font-family: var(--secondary-font);
+	font-size: 20px;
+	font-weight: bold;
+	height: 30px;
 	line-height: 1.5;
 	margin: 0 auto 30px auto;
-	background: #4267B2;
+	text-align: center;
+	width: 80%;
 }
 
 a.fb-login:hover {
-	text-decoration: underline;
 	border: 1px solid white;
+	text-decoration: underline;
 }
 
 .custom-file-input::-webkit-file-upload-button {
@@ -357,21 +359,21 @@ a.fb-login:hover {
 }
 
 .custom-file-input::before {
+	background: white;
+	border: 1px solid #999;
+	border-radius: 3px;
   content: 'Select your avatar';
+	cursor: pointer;
   display: inline-block;
-  background: white;
-  border: 1px solid #999;
-  border-radius: 3px;
-  padding: 5px 8px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
   text-shadow: 1px 1px #fff;
   font-weight: 700;
   font-size: 10pt;
-	width: 94%;
+	outline: none;
+	padding: 5px 8px;
 	text-align: center;
+	-webkit-user-select: none;
+	white-space: nowrap;
+	width: 94%;
 }
 .custom-file-input:hover::before {
   border-color: black;
@@ -387,8 +389,8 @@ a.fb-login:hover {
 	}
 
 	.authentication-container {
-		width: 80%;
 		margin: 0 auto;
+		width: 80%;
 	}
 }
 
@@ -406,24 +408,24 @@ FIND FRIENDS
 
 .friend-container {
 	height: 24vh;
-	width: 11vw;
 	margin: 0 auto 50px auto;
 	min-width: 150px;
 	text-align: center;
+	width: 11vw;
 }
 
 .friend-container p {
 	color: var(--dark-color);
-	text-align: center;
-	width: 100%;
 	display: block;
-	text-transform: uppercase;
 	font-family: sans-serif;
+	text-align: center;
+	text-transform: uppercase;
+	width: 100%;
 }
 
 .friend-container a {
-	font-family: var(--secondary-font);
 	color: var(--dark-color);
+	font-family: var(--secondary-font);
 	font-size: 24px;
 }
 
@@ -432,10 +434,10 @@ FIND FRIENDS
 }
 
 .friend-container img {
-	height: 130px;
-	width: 130px;
 	border-radius: 50%;
+	height: 130px;
 	padding: 5px;
+	width: 130px;
 }
 
 /* ===========================================================
@@ -443,9 +445,9 @@ TIMELINE/PROFILE
 ============================================================ */
 
 .new-post-container {
-	width: 80%;
 	margin: 0 auto;
 	max-width: 500px;
+	width: 80%;
 }
 
 .new-post-container-in-profile {
@@ -455,53 +457,53 @@ TIMELINE/PROFILE
 }
 
 #postContent {
-	width: 100%;
 	height: 80px;
+	width: 100%;
 }
 
 .buttons {
 	display: flex;
-	width: 100%;
 	justify-content: space-between;
+	width: 100%;
 }
 
 .post-label {
-	font-family: var(--main-font);
 	color: var(--dark-color);
+	font-family: var(--main-font);
 	font-size: 20px;
 }
 
 .main-btn {
-	height: 50px;
 	background: var(--main-color);
-	color: white;
 	border-radius: 5px;
-	font-weight: bold;
+	color: white;
 	font-size: 16px;
+	font-weight: bold;
+	height: 50px;
 }
 
 
 .cancel-btn {
 
 	background: var(--dark-red);
-	color: white;
 	border-radius: 5px;
-	font-weight: bold;
+	color: white;
 	font-size: 16px;
+	font-weight: bold;
 	position: absolute;
 
 }
 
 .cancel-big {
-	top: 25px;
-	right: 15px;
 	height: 50px;
+	right: 15px;
+	top: 25px;
 }
 
 .cancel-small {
-	top: 8px;
-	right: 6px;
 	height: 40px;
+	right: 6px;
+	top: 8px;
 }
 
 .custom-post-image::-webkit-file-upload-button {
@@ -513,45 +515,45 @@ TIMELINE/PROFILE
 }
 
 .custom-post-image::before {
-  content: 'Add an Image';
-  display: inline-block;
-  background: var(--light-main-color);
-	font-family: sans-serif;
+	background: var(--light-main-color);
+	border: 1px solid #999;
+	border-radius: 3px;
 	color: var(--dark-color);
-  border: 1px solid #999;
-  border-radius: 3px;
-  padding: 5px 8px;
-  outline: none;
-  white-space: nowrap;
-  -webkit-user-select: none;
-  cursor: pointer;
-  font-size: 16px;
-	width: 90%;
-	text-align: center;
-	line-height: 2.5;
+  content: 'Add an Image';
+	cursor: pointer;
+  display: inline-block;
+	font-family: sans-serif;
+	font-size: 16px;
 	height: 38px;
+	line-height: 2.5;
+  outline: none;
+	padding: 5px 8px;
+  -webkit-user-select: none;
+	text-align: center;
+	width: 90%;
+	white-space: nowrap;
 }
 .custom-post-image:hover::before {
   border-color: black;
 }
 .custom-post-image:active::before {
   background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
-	width: 90%;
 	height: auto;
+	width: 90%;
 }
 
 .post-list {
-	width: 90%;
 	margin: 0 auto;
 	max-width: 780px;
+	width: 90%;
 }
 
 .post-container {
-	margin-bottom: 20px;
-	border: 1px solid var(--main-color);
 	background-color: var(--light-main-color);
-	position: relative;
+	border: 1px solid var(--main-color);
+	margin-bottom: 20px;
 	padding: 25px;
+	position: relative;
 	vertical-align: middle;
 }
 
@@ -559,9 +561,9 @@ TIMELINE/PROFILE
 	background: radial-gradient(var(--light-red), var(--dark-red));
 	border: 2px solid var(--dark-red);
 	border-radius: 5px;
+	font-size: 18px;
 	height: 25px;
 	width: auto;
-	font-size: 18px;
 }
 
 .like-btn:hover {
@@ -569,9 +571,9 @@ TIMELINE/PROFILE
 }
 
 .descr-container {
+	align-items: center;
 	display: flex;
 	margin-bottom: 15px;
-	align-items: center;
 }
 
 .descr-container * {
@@ -587,28 +589,30 @@ TIMELINE/PROFILE
 }
 
 .smallProfilePic {
-	height: 25px;
-	width: 25px;
-	border-radius: 50%;
-	object-fit: cover;
-	z-index: 99;
 	border: 1px solid var(--dark-color);
+	border-radius: 50%;
+	height: 25px;
+	-o-object-fit: cover;
+	   object-fit: cover;
+	width: 25px;
+	z-index: 99;
 }
 
 .smallerProfilePic {
-	height: 20px;
-	width: 20px;
 	border-radius: 50%;
-	object-fit: cover;
+	height: 20px;
+	-o-object-fit: cover;
+	   object-fit: cover;
+	width: 20px;
 }
 
 .post-pic {
 	border: 1px solid var(--dark-color);
-	width: 75%;
+	display: block;
 	height: auto;
 	margin: 0 auto;
-	display: block;
 	margin-bottom: 15px;
+	width: 75%;
 }
 
 .post-content {
@@ -616,17 +620,17 @@ TIMELINE/PROFILE
 }
 
 .content {
-	font-family: sans-serif;
-	width: 90%;
 	display: block;
+	font-family: sans-serif;
 	text-align: justify;
+	width: 90%;
 }
 
 .comment-container {
-	border: 1px dashed var(--dark-color);
-	padding: 5px;
-	margin-bottom: 3px;
 	background: var(--light-main-color);
+	border: 1px dashed var(--dark-color);
+	margin-bottom: 3px;
+	padding: 5px;
 	position: relative;
 }
 
@@ -645,9 +649,9 @@ TIMELINE/PROFILE
 }
 
 .comment-label {
+	color: var(--dark-color);
 	font-family: var(--main-font);
 	font-size: 20px;
-	color: var(--dark-color);
 	margin-bottom: 5px;
 }
 
@@ -657,28 +661,28 @@ TIMELINE/PROFILE
 }
 
 #commentContent {
-	width: 80%;
 	height: 45px;
 	margin-bottom: 30px;
+	width: 80%;
 }
 
 .manage-posts {
 	display: flex;
 	position: absolute;
-	top: 25px;
 	right: 15px;
+	top: 25px;
 }
 
 .manage-comments {
 	display: flex;
 	position: absolute;
-	top: 7px;
 	right: 6px;
+	top: 7px;
 }
 
 .edit-btn {
-	background-image: url('/images/edit.svg');
 	background-color: transparent;
+	background-image: url('/images/edit.svg');
 	background-size: 100% 100%;
 	border: none;
 	margin-right: 5px;
@@ -696,12 +700,13 @@ TIMELINE/PROFILE
 }
 
 .delete-btn {
-	background-image: url('/images/delete.png');
 	background-color: transparent;
+	background-image: url('/images/delete.png');
 	background-size: 100% 100%;
 	border: none;
+	-webkit-filter: invert(55%) sepia(20%) saturate(873%) hue-rotate(200deg) brightness(92%) contrast(80%);
+	        filter: invert(55%) sepia(20%) saturate(873%) hue-rotate(200deg) brightness(92%) contrast(80%);
 	margin-right: 5px;
-	filter: invert(55%) sepia(20%) saturate(873%) hue-rotate(200deg) brightness(92%) contrast(80%);
 }
 
 .edition-buttons {
@@ -730,12 +735,12 @@ TIMELINE/PROFILE
 }
 
 .personal-info-container {
-	display: flex;
-	justify-content: center;
-	width: 70%;
-	margin: 0 auto;
 	align-items: center;
+	display: flex;
 	height: 400px;
+	justify-content: center;
+	margin: 0 auto;
+	width: 70%;
 }
 
 .picture-request-container {
@@ -744,32 +749,33 @@ TIMELINE/PROFILE
 
 .user-profile-pic {
 	border-radius: 50%;
-	object-fit: cover;
-	height: 150px;
-	width: 150px;
-	display: block;
 	clear: both;
+	display: block;
+	height: 150px;
 	margin: 0 auto 15px auto;
+	-o-object-fit: cover;
+	   object-fit: cover;
+	width: 150px;
 }
 
 .user-link-container {
-	width: auto;
-	margin: 0 auto;
 	display: flex;
 	justify-content: space-around;
+	margin: 0 auto;
+	width: auto;
 }
 
 .user-link {
-	border: 1px solid var(--dark-color);
 	background: var(--dark-color);
-	padding: 5px;
+	border: 1px solid var(--dark-color);
 	border-radius: 5px;
 	color: white;
 	font-family: var(--secondary-font);
 	font-weight: bold;
-	margin: 3px;
 	height: 40px;
 	line-height: 2.5;
+	margin: 3px;
+	padding: 5px;
 	text-align: center;
 }
 
@@ -782,11 +788,11 @@ TIMELINE/PROFILE
 }
 
 .manage-request {
-	width: 100%;
-	text-align: center;
-	font-size: 24px;
 	font-family: var(--secondary-font);
+	font-size: 24px;
 	margin-top: -30px;
+	text-align: center;
+	width: 100%;
 }
 
 .req-btn {
@@ -811,47 +817,47 @@ MANAGE/DELETE
 
 .info-container {
 	background: radial-gradient(var(--light-main-color), var(--main-color));
-	width: 50%;
-	margin: 0 auto;
-	border-radius: 5px;
 	border: 1px solid var(--dark-color);
-	padding: 20px;
+	border-radius: 5px;
+	margin: 0 auto;
 	min-width: 440px;
+	padding: 20px;
+	width: 50%;
 }
 
 .manage-label {
-	font-family: var(--main-font);
 	color: white;
+	font-family: var(--main-font);
 	font-size: 24px;
 	margin-bottom: 25px;
 	text-align: center;
 }
 
 .info-container label {
-	margin-left: 10%;
-	font-family: var(--main-font);
 	color: var(--dark-color);
+	font-family: var(--main-font);
 	font-size: 20px;
 	margin-bottom: 5px;
+	margin-left: 10%;
 }
 
 .info-container input {
+	margin: 0 auto;
 	padding: 5px;
 	width: 80%;
-	margin: 0 auto;
 }
 
 .info-container button {
-	width: 180px;
-	margin: 0 auto;
-	text-align: center;
-	display: block;
-	padding: 5px;
 	background: white;
-	border-radius: 5px;
 	border: none;
+	border-radius: 5px;
+	display: block;
 	font-family: var(--secondary-font);
 	font-size: 18px;
+	margin: 0 auto;
+	padding: 5px;
+	text-align: center;
+	width: 180px;
 }
 
 .info-container button:hover {
@@ -864,16 +870,16 @@ MANAGE/DELETE
 }
 
 .delete-link {
+	border: 1px solid var(--dark-red);
+	border-radius: 5px;
 	color: var(--dark-red);
+	display: block;
 	font-family: var(--secondary-font);
 	font-size: 24px;
-	text-align: center;
-	display: block;
-	border-radius: 5px;
-	border: 1px solid var(--dark-red);
-	width: 160px;
 	margin: 0 auto;
 	padding: 5px;
+	text-align: center;
+	width: 160px;
 }
 
 .delete-link:hover {
@@ -888,61 +894,61 @@ MANAGE/DELETE
 }
 
 .cancel-delete-account {
-	width: 200px;
-	height: 100px;
-	text-align: center;
-	margin: 0 auto;
-	display: block;
 	background: var(--dark-red);
-	color: white;
-	font-family: var(--secondary-font);
-	font-weight: bold;
-	font-size: 32px;
 	border-radius: 5px;
+	color: white;
+	display: block;
+	font-family: var(--secondary-font);
+	font-size: 32px;
+	font-weight: bold;
+	height: 100px;
 	line-height: 3;
+	margin: 0 auto;
+	text-align: center;
+	width: 200px;
 }
 
 .cancel-delete-account:hover {
 	background: rgb(187,60,13);
-	line-height: 2.5;
 	font-size: 40px;
+	line-height: 2.5;
 	transition-duration: 0.2s;
 	transition-property: font-size, background, line-height;
 	transition-timing-function: ease-in;
 }
 
 .delete-account-button {
-	text-align: center;
-	margin: 0 auto 30px auto;
-	display: block;
-	width: 100px;
-	height: 50px;
-	font-family: var(--secondary-font);
-	border-radius: 5px;
 	background: white;
-	color: rgb(187,60,13);
 	border: 1px solid rgb(187,60,13);
+	border-radius: 5px;
+	color: rgb(187,60,13);
+	display: block;
+	font-family: var(--secondary-font);
 	font-size: 20px;
+	height: 50px;
+	margin: 0 auto 30px auto;
+	text-align: center;
+	width: 100px;
 }
 
 .delete-account-button:hover {
-	font-size: 14px;
-	color: rgb(201,125,97);
 	border: 1px solid rgb(201,125,97);
-	width: 70px;
+	color: rgb(201,125,97);
+	font-size: 14px;
 	height: 40px;
 	transition-duration: 0.2s;
 	transition-property: all;
 	transition-timing-function: ease-in;
+	width: 70px;
 }
 
 .error-msg {
 	color: var(--dark-red);
 	font-family: var(--secondary-font);
-	font-weight: bold;
 	font-size: 22px;
-	text-align: center;
+	font-weight: bold;
 	margin-bottom: 8px;
+	text-align: center;
 }
 
 /* ==========================================
@@ -952,14 +958,14 @@ GALLERY
 .gallery-container {
 	display: flex;
 	flex-wrap: wrap;
-	width: 90%;
 	margin: 0 auto;
+	width: 90%;
 }
 
 .gallery-photo {
-	vertical-align: top;
-	margin: 10px;
-	width: auto;
-	height: 300px;
 	border: 1px solid silver;
+	height: 300px;
+	margin: 10px;
+	vertical-align: top;
+	width: auto;
 }
