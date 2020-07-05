@@ -4,5 +4,6 @@ block content
   
   h1= title
   
+  div.gallery-container
   for photo in user.gallery
-    img(src=photo)
+    img.gallery-photo(src=photo)

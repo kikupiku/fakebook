@@ -318,6 +318,10 @@ LOGIN/SIGNUP
 	border-radius: 5px;
 	height: 60px;
 	border: 3px solid var(--dark-color);
+	color: white;
+	font-family: var(--secondary-font);
+	font-size: 24px;
+	font-weight: bold;
 }
 
 .fb-link {
@@ -880,6 +884,7 @@ MANAGE/DELETE
 	font-family: var(--secondary-font);
 	font-size: 16px;
 	margin-left: 10%;
+	margin-top: 8px;
 }
 
 .cancel-delete-account {
@@ -929,4 +934,32 @@ MANAGE/DELETE
 	transition-duration: 0.2s;
 	transition-property: all;
 	transition-timing-function: ease-in;
+}
+
+.error-msg {
+	color: var(--dark-red);
+	font-family: var(--secondary-font);
+	font-weight: bold;
+	font-size: 22px;
+	text-align: center;
+	margin-bottom: 8px;
+}
+
+/* ==========================================
+GALLERY
+============================================ */
+
+.gallery-container {
+	display: flex;
+	flex-wrap: wrap;
+	width: 90%;
+	margin: 0 auto;
+}
+
+.gallery-photo {
+	vertical-align: top;
+	margin: 10px;
+	width: auto;
+	height: 300px;
+	border: 1px solid silver;
 }

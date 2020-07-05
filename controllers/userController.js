@@ -221,33 +221,41 @@ exports.user_delete_post = function (req, res, next) {
         let commentIds = commentsToPostsOfUser.map(comment => comment._id);
 
         async.parallel({
-          postsDelete: function (callback) {
-            Post.deleteMany({ _id: { '$in': postIds } })
-            .exec(callback);
+          postsDelete: function (callback2) {
+            Post.deleteMany({ _id: { '$in': postIds } })  //works
+            .exec((err, deletedStuff) => {
+              console.log('finishing deleting posts', err);
+              callback2(err, deletedStuff);
+            });
           },
-          userCommentsDelete: function (callback) {
-            Comment.deleteMany({ _id: { '$in': userCommentIds } })
-            .exec(callback);
+          userCommentsDelete: function (callback2) {
+            Comment.deleteMany({ _id: { '$in': userCommentIds } }) // works
+            .exec(callback2);
           },
-          commentsDelete: function (callback) {
+          commentsDelete: function (callback2) {
             Comment.deleteMany({ _id: { '$in': commentIds } })
-            .exec(callback);
+            .exec(callback2);
           },
-          friendsToDelete: function (callback) {
-            results.friendsOfUser.forEach((friend) => {
+          friendsToDelete: function (callback2) {
+            results.friendsOfUser.forEach(async (friend) => {
+
               let reducedFriendList = friend.friends.filter(val => val != userToDelete._id);
-              User.update({ _id: friend._id }, { friends: reducedFriendList })
-              .exec(callback);
+              await User.update({ _id: friend._id }, { friends: reducedFriendList });
             });
+            callback2(null, results.friendsOfUser);
           },
-          friendRequestsToDelete: function (callback) {
-            results.friendshipsRequestedByUser.forEach((requestee) => {
+          friendRequestsToDelete: function (callback2) {
+            results.friendshipsRequestedByUser.forEach(async (requestee) => {
               let reducedFriendRequestList = requestee.friendRequests.filter(val => val != userToDelete._id);
-              User.update({ _id: requestee._id }, { friendRequests: reducedFriendRequestList })
-              .exec(callback);
+              await User.update({ _id: requestee._id }, { friendRequests: reducedFriendRequestList })
             });
+            callback2(null, results.friendshipsRequestedByUser);
           },
         }, function (err, deletedStuff) {
+          if (err) {
+            return next(err);
+          }
+          console.log('here');
           User.findByIdAndRemove(req.params.id, function deleteUser(err) {
             if (err) {
               return next(err);

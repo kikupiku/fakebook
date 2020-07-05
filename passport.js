@@ -62,6 +62,7 @@ passport.use(new FacebookStrategy({
           friends: [],
           friendRequests: [],
           picture: profile.photos ? profile.photos[0].value : 'https://res.cloudinary.com/kikupiku/image/upload/v1592919291/fakebook/default-user_s7rozl.png',
+          gallery: profile.photos ? [profile.photos[0].value] : [],
         }).save();
         done(null, user);
       }

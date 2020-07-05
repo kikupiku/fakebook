@@ -4,6 +4,11 @@ block content
   
   h1= title.toUpperCase()
   
+  div.error-container
+    if (errors) 
+      for error in errors
+        p.error-msg #{error}
+  
   div.authentication-wrapper
     div.authentication-container.auth-form-container
       h2 Sign Up
@@ -40,8 +45,3 @@ block content
       br
       div.fb-link
         a.fb-login(href='/auth/facebook') Login with Facebook instead
-
-  div.error-container
-    if (errors) 
-      for error in errors
-        p= error

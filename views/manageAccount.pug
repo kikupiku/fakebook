@@ -5,7 +5,7 @@ block content
   
   if (errors)
     for error in errors
-      p= error.msg
+      p.error-msg #{error.msg}
   
   div.info-container
     p.manage-label Personal Information
@@ -28,6 +28,9 @@ block content
     
   br
     
+  if (passwordChangeMsg)
+    p.error-msg #{passwordChangeMsg}
+    
   if (currentUser.email)  
     div.info-container
       p.manage-label Change Your Password
@@ -41,7 +44,5 @@ block content
         br
         button(type='submit' formaction='/users/' + currentUser._id + '/update-password' method='POST') Change Password
     br
-    if (passwordChangeMsg)
-      p= passwordChangeMsg
     
   a.delete-link(href='/users/' + currentUser._id + '/delete') Delete Your Account
