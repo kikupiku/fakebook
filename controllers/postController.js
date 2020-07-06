@@ -28,7 +28,8 @@ exports.post_create_post = [
         }
 
         if (!errors.isEmpty()) {
-          res.status(400).redirect('/', { errors: errors.array() });
+          let errors = req.flash('error');
+          res.status(400).redirect('/');
         } else {
           post.save(err => {
             if (err) {
@@ -41,7 +42,8 @@ exports.post_create_post = [
       });
     } else {
       if (!errors.isEmpty()) {
-        res.status(400).redirect('/', { errors: errors.array() });
+        let errors = req.flash('error');
+        res.redirect('/');
       } else {
         post.save(err => {
           if (err) {
@@ -135,7 +137,8 @@ exports.post_update_post = [
           }
 
           if (!errors.isEmpty()) {
-            res.status(400).redirect('/', { errors: errors.array() });
+            let errors = req.flash('error');
+            res.redirect('/');
           } else {
             Post.findByIdAndUpdate(req.params.id, post, {}, function (err, updatedPost) {
               if (err) {
@@ -149,7 +152,8 @@ exports.post_update_post = [
       } else {
 
         if (!errors.isEmpty()) {
-          res.status(400).redirect('/', { errors: errors.array() });
+          let errors = req.flash('error');
+          res.redirect('/');
         } else {
           Post.findByIdAndUpdate(req.params.id, post, {}, function (err, updatedPost) {
             if (err) {

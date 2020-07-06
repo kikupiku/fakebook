@@ -3,6 +3,11 @@ extends layout
 block content
   h1= title
   
+  div.error-container
+    if (errors) 
+      for error in errors
+        p.error-msg #{error}
+  
   div.new-post-container
     form.add-post(id='createNewPost' method='POST' action='/posts' enctype='multipart/form-data')
       label.post-label(for='postContent') Write a Post:

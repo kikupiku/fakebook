@@ -21,7 +21,8 @@ exports.comment_create_post = [
     });
 
     if (!errors.isEmpty()) {
-      res.status(400).redirect('/', { errors: errors.array() });
+      let errors = req.flash('error');
+      res.status(400).redirect('/');
     } else {
       comment.save(err => {
         if (err) {
@@ -57,7 +58,8 @@ exports.comment_update_post = [
       });
 
       if (!errors.isEmpty()) {
-        res.status(400).redirect('/', { errors: errors.array() });
+        let errors = req.flash('error');
+        res.status(400).redirect('/');
       } else {
         Comment.findByIdAndUpdate(req.params.id, comment, {}, function (err, updatedComment) {
           if (err) {

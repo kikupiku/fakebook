@@ -143,7 +143,8 @@ exports.user_create_post = [
       });
 
       if (!errors.isEmpty()) {
-        res.redirect('/', { errors: errors.array() });
+        req.flash('error', errors.array());
+        res.redirect('/');
       } else {
         user.save(err => {
           if (err) {
