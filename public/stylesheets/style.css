@@ -30,7 +30,7 @@ footer, header, hgroup, menu, nav, section {
 }
 body {
 	line-height: 1;
-  box-sizing: border-box;
+  	box-sizing: border-box;
 }
 ol, ul {
 	list-style: none;
@@ -56,8 +56,8 @@ textarea  {
 }
 
 :root {
-	--light-main-color: rgb(167,210,155);
-  --main-color: rgb(61,134,46);
+	--light-main-color: rgb(167, 210, 155);
+  	--main-color: rgb(61,134,46);
 	--dark-color: rgb(46,97,47);
 	--dark-red: rgb(185, 119, 115);
 	--light-red: rgb(210,175,173);
@@ -104,15 +104,15 @@ h3 {
 }
 
 a {
-  text-decoration: none;
+  	text-decoration: none;
 }
 
 header {
 	background-color: var(--main-color);
 	color: white;
-  font-family: var(--main-font);
+  	font-family: var(--main-font);
 	font-size: 24px;
-  font-weight: bold;
+  	font-weight: bold;
 	height: 60px;
 	position: -webkit-sticky;
 	position: sticky;

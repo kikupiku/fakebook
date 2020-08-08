@@ -49,7 +49,7 @@ exports.timeline = function (req, res, next) {
     });
   } else {
     let errors = req.flash('error');
-    res.render('signup-login', { title: 'Fakebook', errors: errors });
+    res.render('signup-login', { title: 'Odinbook', errors: errors });
   }
 };
 
@@ -95,7 +95,7 @@ exports.timelinePOST = function (req, res, next) {
     });
   } else {
     let errors = req.flash('error');
-    res.render('signup-login', { title: 'Fakebook', errors: errors });
+    res.render('signup-login', { title: 'Odinbook', errors: errors });
   }
 };
 
