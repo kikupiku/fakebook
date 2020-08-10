@@ -9,3 +9,5 @@ I use [mongoDB](https://www.mongodb.com/) as a database with [Mongoose](https://
 Thanks to the use of more advanced queries than in previous projects, it's not necessary to delete all dependent items before deleting a model instance. E.g., you can delete your account and all your posts, comments, and friendship connections will automatically also be gone.
 
 The live version of the app is deployed on Heroku and is available **[HERE](https://odinbook-kikupiku.herokuapp.com/)**.
+
+![gif on the project in action](https://res.cloudinary.com/kikupiku/image/upload/v1597065129/project-gifs/odinbook_coepbo.gif)
